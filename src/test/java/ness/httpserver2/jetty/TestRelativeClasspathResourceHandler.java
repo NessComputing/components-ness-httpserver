@@ -1,15 +1,10 @@
 package ness.httpserver2.jetty;
 
-import io.trumpet.httpclient.HttpClient;
-import io.trumpet.httpclient.HttpClientResponse;
-import io.trumpet.httpclient.HttpClientResponseHandler;
-import io.trumpet.httpclient.response.ContentResponseHandler;
-import io.trumpet.httpclient.response.StringContentConverter;
-import io.trumpet.servlet.test.LocalHttpService;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
+
+import ness.httpserver2.testing.LocalHttpService;
 
 import org.eclipse.jetty.server.Handler;
 import org.junit.After;
@@ -17,6 +12,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.nesscomputing.httpclient.HttpClient;
+import com.nesscomputing.httpclient.HttpClientResponse;
+import com.nesscomputing.httpclient.HttpClientResponseHandler;
+import com.nesscomputing.httpclient.response.ContentResponseHandler;
+import com.nesscomputing.httpclient.response.StringContentConverter;
 import com.nesscomputing.testing.lessio.AllowNetworkAccess;
 import com.nesscomputing.testing.lessio.AllowNetworkListen;
 

@@ -4,19 +4,21 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>ness.maven</groupId>
-    <artifactId>base</artifactId>
-    <version>38-SNAPSHOT</version>
+    <groupId>com.nesscomputing</groupId>
+    <artifactId>ness-oss-parent</artifactId>
+    <version>8</version>
   </parent>
 
   <scm>
-    <connection>scm:hg:ssh://hg@hg.nessops.net/code/components/ness-httpserver</connection>
+    <connection>scm:git:git://github.com/NessComputing/components-ness-httpserver.git</connection>
+    <developerConnection>scm:git:git@github.com:NessComputing/components-ness-httpserver.git</developerConnection>
+    <url>http://github.com/NessComputing/components-ness-httpserver</url>
   </scm>
 
-  <groupId>ness.components</groupId>
-  <artifactId>ness-httpserver2</artifactId>
-  <name>httpserver2</name>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>com.nesscomputing.components</groupId>
+  <artifactId>ness-httpserver</artifactId>
+  <name>httpserver</name>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Ness HTTP server component. Can be plugged into a service to make it start up on its own.</description>
 
@@ -46,7 +48,7 @@
     <dependency>
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-jmx4log</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
     </dependency>
 
     <dependency>
@@ -125,6 +127,12 @@
 
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-security</artifactId>
+      <version>${dep.jetty.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
       <version>${dep.jetty.version}</version>
     </dependency>
@@ -132,6 +140,7 @@
     <dependency>
       <groupId>org.eclipse.jetty.orbit</groupId>
       <artifactId>javax.servlet</artifactId>
+      <version>3.0.0.v201112011016</version>
     </dependency>
 
     <dependency>
@@ -163,6 +172,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
     </dependency>
 
     <dependency>
@@ -178,16 +188,9 @@
     </dependency>
 
     <dependency>
-      <groupId>io.trumpet.components</groupId>
-      <artifactId>tc-httpclient</artifactId>
-      <version>18.0</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.trumpet.components</groupId>
-      <artifactId>tc-servlet</artifactId>
-      <version>10.0</version>
+      <groupId>com.nesscomputing.components</groupId>
+      <artifactId>ness-httpclient</artifactId>
+      <version>1.0.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

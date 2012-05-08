@@ -1,9 +1,6 @@
 package ness.httpserver2;
 
 import static java.lang.String.format;
-import io.trumpet.httpclient.HttpClient;
-import io.trumpet.httpclient.guice.HttpClientModule;
-import io.trumpet.httpclient.response.StringContentConverter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,6 +23,9 @@ import com.google.inject.name.Named;
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigModule;
 import com.nesscomputing.galaxy.GalaxyConfigModule;
+import com.nesscomputing.httpclient.HttpClient;
+import com.nesscomputing.httpclient.guice.HttpClientModule;
+import com.nesscomputing.httpclient.response.StringContentConverter;
 import com.nesscomputing.lifecycle.Lifecycle;
 import com.nesscomputing.lifecycle.LifecycleStage;
 import com.nesscomputing.lifecycle.guice.LifecycleModule;
