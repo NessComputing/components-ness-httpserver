@@ -20,10 +20,6 @@
         </layout>
     </appender>
 
-    <logger name="io.trumpet">
-        <level value="debug" />
-    </logger>
-
     <logger name="ness">
         <level value="debug" />
     </logger>
