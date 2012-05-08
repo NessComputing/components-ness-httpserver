@@ -169,21 +169,21 @@ public class TestRelativeClasspathResourceHandler
     public void testWelcomeFile1() throws Exception
     {
         final String content = httpClient.get(baseUri + "/", StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
     @Test
     public void testWelcomeFile2() throws Exception
     {
         final String content = httpClient.get(baseUri, StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
     @Test
     public void testWelcomeFile3() throws Exception
     {
         final String content = httpClient.get(baseUri + "/index.html", StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
     @Test

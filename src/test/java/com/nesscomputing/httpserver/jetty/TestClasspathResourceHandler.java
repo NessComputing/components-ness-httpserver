@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 import org.eclipse.jetty.server.Handler;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,7 +30,6 @@ import com.nesscomputing.httpclient.HttpClientResponse;
 import com.nesscomputing.httpclient.HttpClientResponseHandler;
 import com.nesscomputing.httpclient.response.ContentResponseHandler;
 import com.nesscomputing.httpclient.response.StringContentConverter;
-import com.nesscomputing.httpserver.jetty.ClasspathResourceHandler;
 import com.nesscomputing.httpserver.testing.LocalHttpService;
 import com.nesscomputing.testing.lessio.AllowNetworkAccess;
 import com.nesscomputing.testing.lessio.AllowNetworkListen;
@@ -168,21 +166,21 @@ public class TestClasspathResourceHandler
     public void testWelcomeFile1() throws Exception
     {
         final String content = httpClient.get(baseUri + "/", StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
     @Test
     public void testWelcomeFile2() throws Exception
     {
         final String content = httpClient.get(baseUri, StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
     @Test
     public void testWelcomeFile3() throws Exception
     {
         final String content = httpClient.get(baseUri + "/index.html", StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
-        Assert.assertEquals("the welcome file\n", content);
+        Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
 
 
