@@ -17,7 +17,6 @@ package com.nesscomputing.httpserver;
 
 import javax.servlet.Servlet;
 
-
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceFilter;
@@ -26,6 +25,7 @@ import com.nesscomputing.config.Config;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
 import com.nesscomputing.httpserver.log.file.FileRequestLogModule;
 import com.nesscomputing.httpserver.log.log4j.Log4jRequestLogModule;
+import com.nesscomputing.httpserver.log.syslog.SyslogRequestLogModule;
 
 public class HttpServerModule extends ServletModule
 {
@@ -51,7 +51,7 @@ public class HttpServerModule extends ServletModule
         install (new LogFieldsModule());
         install (new FileRequestLogModule(config));
         install (new Log4jRequestLogModule(config));
-//         install (new SyslogRequestLogModule(config));
+        install (new SyslogRequestLogModule(config));
 
         final Class<? extends HttpServer> serverClass = httpServerConfig.getServerClass();
         bind (serverClass).asEagerSingleton();
