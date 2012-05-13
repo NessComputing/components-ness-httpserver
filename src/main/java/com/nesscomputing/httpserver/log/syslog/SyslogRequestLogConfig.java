@@ -67,14 +67,14 @@ public abstract class SyslogRequestLogConfig
         return "udp";
     }
 
-    @Config("syslog_host")
+    @Config("syslog-host")
     @Default("localhost")
     public String getSyslogHost()
     {
         return "localhost";
     }
 
-    @Config("syslog_port")
+    @Config("syslog-port")
     @Default("514")
     public int getSyslogPort()
     {
@@ -103,14 +103,14 @@ public abstract class SyslogRequestLogConfig
     }
 
 
-    @Config("ianaIdentifier")
+    @Config("iana-identifier")
     @Default("12345")
     public int getIanaIdentifier()
     {
         return 12345;
     }
 
-    @Config("maxMessageLength")
+    @Config("max-msg-len")
     @Default("1023")
     public int getMaxMessageLength()
     {
