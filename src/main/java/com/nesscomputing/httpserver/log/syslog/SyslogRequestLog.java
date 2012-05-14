@@ -23,8 +23,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.RequestLog;
@@ -145,7 +143,10 @@ public class SyslogRequestLog extends AbstractLifeCycle implements RequestLog
 
             final LogField field = knownFields.get(chunks[0]);
             if (chunks.length == 1) {
-                logBuilder.put(field.getShortName(), ObjectUtils.toString(field.log(request, response, null)));
+                final Object result = field.log(request, response, null);
+                if (result != null) {
+                    logBuilder.put(field.getShortName(), result.toString());
+                }
             }
             else if (chunks.length == 2) {
                 final String fieldName = field.getShortName() + "@" + ianaIdentifier;
@@ -155,12 +156,17 @@ public class SyslogRequestLog extends AbstractLifeCycle implements RequestLog
                     builderMap.put(fieldName, subBuilder);
                 }
                 final String fieldKey = chunks[1].toLowerCase(Locale.ENGLISH).replace("=", "_");
-                subBuilder.put(fieldKey, ObjectUtils.toString(field.log(request, response, chunks[1])));
+                final Object result = field.log(request, response, chunks[1]);
+                if (result != null) {
+                    subBuilder.put(fieldKey, result.toString());
+                }
             }
         }
 
+        final String threadName = StringUtils.replaceChars(Thread.currentThread().getName()," \t", "");
+
         final StructuredSyslogMessage structuredMessage = new StructuredSyslogMessage(messageId,
-                                                                                      Thread.currentThread().getName(),
+                                                                                      threadName,
                                                                                       Maps.transformValues(builderMap, new Function<Builder<String, String>, Map<String, String>>() {
                                                                                           @Override
                                                                                           public Map<String, String> apply(final Builder<String, String> builder) {
