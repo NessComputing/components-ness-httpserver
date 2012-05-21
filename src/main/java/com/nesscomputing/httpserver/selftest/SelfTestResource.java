@@ -20,9 +20,6 @@ import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import com.google.inject.Inject;
 
 @Path("/selftest")
@@ -44,11 +41,9 @@ public class SelfTestResource {
 	 * On failure, returns a 5xx response
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean doSelfTest() {
+	public void doSelfTest() {
 		for (SelfTest test : tests) {
 		    test.doSelfTest();
 		}
-		return true;
 	}
 }
