@@ -20,7 +20,7 @@ import com.google.inject.Binder;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
-public class SelftestModule extends AbstractModule
+public class SelfTestModule extends AbstractModule
 {
     @Override
     public void configure()
