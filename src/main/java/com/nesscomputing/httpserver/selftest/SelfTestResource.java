@@ -41,7 +41,7 @@ public class SelfTestResource {
 	 * On failure, returns a 5xx response
 	 */
 	@GET
-	public void doSelfTest() {
+	public void doSelfTest() throws Exception {
 		for (SelfTest test : tests) {
 		    test.doSelfTest();
 		}
