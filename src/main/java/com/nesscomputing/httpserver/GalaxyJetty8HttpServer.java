@@ -42,7 +42,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.primitives.Ints;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.nesscomputing.galaxy.GalaxyConfig;
 import com.nesscomputing.galaxy.GalaxyIp;
@@ -51,7 +50,7 @@ import com.nesscomputing.lifecycle.LifecycleListener;
 import com.nesscomputing.lifecycle.LifecycleStage;
 import com.nesscomputing.logging.Log;
 
-public class GalaxyJetty7HttpServer implements HttpServer
+public class GalaxyJetty8HttpServer implements HttpServer
 {
     private static final Log LOG = Log.findLog();
 
@@ -62,8 +61,8 @@ public class GalaxyJetty7HttpServer implements HttpServer
     private final Servlet catchallServlet;
 
     private MBeanServer mbeanServer = null;
-    private Injector injector = null;
     private Set<Handler> handlers = null;
+    private GuiceFilter guiceFilter = null;
 
     private Server server = null;
 
@@ -73,7 +72,7 @@ public class GalaxyJetty7HttpServer implements HttpServer
     private Connector externalHttpsConnector = null;
 
     @Inject
-    public GalaxyJetty7HttpServer(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig, final Servlet catchallServlet)
+    public GalaxyJetty8HttpServer(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig, final Servlet catchallServlet)
     {
         this.httpServerConfig = httpServerConfig;
         this.galaxyConfig = galaxyConfig;
@@ -81,19 +80,19 @@ public class GalaxyJetty7HttpServer implements HttpServer
     }
 
     @Inject(optional=true)
-    public void setInjector(final Injector injector)
+    void setGuiceFilter(final GuiceFilter guiceFilter)
     {
-        this.injector = injector;
+        this.guiceFilter = guiceFilter;
     }
 
     @Inject(optional=true)
-    public void setMBeanServer(final MBeanServer mbeanServer)
+    void setMBeanServer(final MBeanServer mbeanServer)
     {
         this.mbeanServer = mbeanServer;
     }
 
     @Inject(optional=true)
-    public void addHandlers(final Set<Handler> handlers)
+    void addHandlers(final Set<Handler> handlers)
     {
         this.handlers = handlers;
     }
@@ -266,8 +265,8 @@ public class GalaxyJetty7HttpServer implements HttpServer
     {
         final ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
 
-        if (injector != null) {
-            final FilterHolder filterHolder = new FilterHolder(injector.getInstance(GuiceFilter.class));
+        if (guiceFilter != null) {
+            final FilterHolder filterHolder = new FilterHolder(guiceFilter);
             context.addFilter(filterHolder, "/*", EMPTY_DISPATCHES);
         }
 
