@@ -15,6 +15,10 @@
  */
 package com.nesscomputing.httpserver;
 
+import static com.nesscomputing.httpserver.HttpServerHandlerBinder.CATCHALL_NAME;
+import static com.nesscomputing.httpserver.HttpServerHandlerBinder.HANDLER_NAME;
+import static com.nesscomputing.httpserver.HttpServerHandlerBinder.SECURITY_NAME;
+
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -75,7 +79,7 @@ public class GalaxyJetty8HttpServer implements HttpServer
     private Connector externalHttpsConnector = null;
 
     @Inject
-    public GalaxyJetty8HttpServer(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig, final Servlet catchallServlet)
+    public GalaxyJetty8HttpServer(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig, @Named(CATCHALL_NAME) final Servlet catchallServlet)
     {
         this.httpServerConfig = httpServerConfig;
         this.galaxyConfig = galaxyConfig;
@@ -95,13 +99,13 @@ public class GalaxyJetty8HttpServer implements HttpServer
     }
 
     @Inject(optional=true)
-    void addHandlers(@Named("_handlers") final Set<Handler> handlers)
+    void addHandlers(@Named(HANDLER_NAME) final Set<Handler> handlers)
     {
         this.handlers = handlers;
     }
 
     @Inject(optional=true)
-    void setSecurityHandlers(@Named("_security") final HandlerWrapper securityHandler)
+    void setSecurityHandlers(@Named(SECURITY_NAME) final HandlerWrapper securityHandler)
     {
         this.securityHandler = securityHandler;
     }

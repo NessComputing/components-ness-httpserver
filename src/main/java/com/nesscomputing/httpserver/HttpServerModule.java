@@ -15,8 +15,6 @@
  */
 package com.nesscomputing.httpserver;
 
-import javax.servlet.Servlet;
-
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceFilter;
@@ -57,7 +55,8 @@ public class HttpServerModule extends ServletModule
         bind (serverClass).asEagerSingleton();
         bind (HttpServer.class).to(serverClass).asEagerSingleton();
 
-        bind (Servlet.class).to(InvalidRequestServlet.class).in(Scopes.SINGLETON);
+        HttpServerHandlerBinder.bindCatchallServlet(binder()).to(InvalidRequestServlet.class).in(Scopes.SINGLETON);
+
         bind (GuiceFilter.class).in(Scopes.SINGLETON);
     }
 }

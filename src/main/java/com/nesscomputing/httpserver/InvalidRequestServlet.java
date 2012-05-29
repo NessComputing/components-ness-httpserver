@@ -22,11 +22,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Singleton;
 import com.nesscomputing.logging.Log;
 
 /**
  * This is the backing servlet for Filter chains if no "default mapping" is configured. It will log any attempts to get Data out of it.
  */
+@Singleton
 class InvalidRequestServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
