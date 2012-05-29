@@ -28,6 +28,7 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerWrapper;
 import org.eclipse.jetty.server.handler.StatisticsHandler;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
@@ -42,6 +43,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.primitives.Ints;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.google.inject.servlet.GuiceFilter;
 import com.nesscomputing.galaxy.GalaxyConfig;
 import com.nesscomputing.galaxy.GalaxyIp;
@@ -62,6 +64,7 @@ public class GalaxyJetty8HttpServer implements HttpServer
 
     private MBeanServer mbeanServer = null;
     private Set<Handler> handlers = null;
+    private HandlerWrapper securityHandler = null;
     private GuiceFilter guiceFilter = null;
 
     private Server server = null;
@@ -92,9 +95,15 @@ public class GalaxyJetty8HttpServer implements HttpServer
     }
 
     @Inject(optional=true)
-    void addHandlers(final Set<Handler> handlers)
+    void addHandlers(@Named("_handlers") final Set<Handler> handlers)
     {
         this.handlers = handlers;
+    }
+
+    @Inject(optional=true)
+    void setSecurityHandlers(@Named("_security") final HandlerWrapper securityHandler)
+    {
+        this.securityHandler = securityHandler;
     }
 
     @Inject(optional=true)
@@ -177,9 +186,18 @@ public class GalaxyJetty8HttpServer implements HttpServer
 
         handlerCollection.addHandler(createGuiceContext());
 
-        // add handlers to Jetty
         final StatisticsHandler statsHandler = new StatisticsHandler();
-        statsHandler.setHandler(handlerCollection);
+
+        if (securityHandler == null) {
+            statsHandler.setHandler(handlerCollection);
+        }
+        else {
+            LOG.info("Enabling security handler (%s)", securityHandler.getClass().getName());
+            securityHandler.setHandler(handlerCollection);
+            statsHandler.setHandler(securityHandler);
+        }
+
+        // add handlers to Jetty
         server.setHandler(statsHandler);
 
         final QueuedThreadPool threadPool = new QueuedThreadPool(httpServerConfig.getMaxThreads());

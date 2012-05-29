@@ -16,10 +16,12 @@
 package com.nesscomputing.httpserver;
 
 import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.HandlerWrapper;
 
 import com.google.inject.Binder;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.name.Names;
 
 
 /**
@@ -35,5 +37,10 @@ public final class HttpServerHandlerBinder
     {
         final Multibinder<Handler> handlers = Multibinder.newSetBinder(binder, Handler.class);
         return handlers.addBinding();
+    }
+
+    public static LinkedBindingBuilder<HandlerWrapper> bindSecurityHandler(final Binder binder)
+    {
+        return binder.bind(HandlerWrapper.class).annotatedWith(Names.named("_security"));
     }
 }
