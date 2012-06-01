@@ -23,16 +23,16 @@ import javax.ws.rs.Path;
 import com.google.inject.Inject;
 
 @Path("/selftest")
-public class SelfTestResource {
+public class SelftestResource {
 
-    private Set<SelfTest> tests = Collections.emptySet();
+    private Set<Selftest> tests = Collections.emptySet();
 
     @Inject
-    SelfTestResource() {
+    SelftestResource() {
     }
 
     @Inject(optional=true)
-    public void setSelfTests(Set<SelfTest> tests) {
+    public void setSelftests(Set<Selftest> tests) {
         this.tests = tests;
     }
 
@@ -41,9 +41,9 @@ public class SelfTestResource {
 	 * On failure, returns a 5xx response
 	 */
 	@GET
-	public void doSelfTest() throws Exception {
-		for (SelfTest test : tests) {
-		    test.doSelfTest();
+	public void doSelftest() throws Exception {
+		for (Selftest test : tests) {
+		    test.doSelftest();
 		}
 	}
 }

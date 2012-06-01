@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.nesscomputing</groupId>
     <artifactId>ness-oss-parent</artifactId>
-    <version>9</version>
+    <version>11</version>
   </parent>
 
   <scm>
@@ -18,7 +18,7 @@
   <groupId>com.nesscomputing.components</groupId>
   <artifactId>ness-httpserver</artifactId>
   <name>httpserver</name>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Ness HTTP server component. Can be plugged into a service to make it start up on its own.</description>
 
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-lifecycle</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.1</version>
     </dependency>
 
     <dependency>
@@ -99,6 +99,12 @@
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
       <version>${dep.jetty.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jetty.orbit</groupId>
+          <artifactId>javax.servlet</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -138,9 +144,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jetty.orbit</groupId>
-      <artifactId>javax.servlet</artifactId>
-      <version>3.0.0.v201112011016</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
     </dependency>
 
     <dependency>
@@ -190,7 +195,7 @@
     <dependency>
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-httpclient</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

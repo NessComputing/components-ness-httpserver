@@ -15,22 +15,10 @@
  */
 package com.nesscomputing.httpserver.selftest;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.binder.LinkedBindingBuilder;
-import com.google.inject.multibindings.Multibinder;
-
-public class SelfTestModule extends AbstractModule
-{
-    @Override
-    public void configure()
-    {
-        bind (SelfTestResource.class);
-    }
-
-    public static LinkedBindingBuilder<SelfTest> registerSelfTest(final Binder binder)
-    {
-        return Multibinder.newSetBinder(binder, SelfTest.class).addBinding();
-    }
+public interface Selftest {
+    /**
+     * Check that service is available.
+     * @throw Exception the service is not available
+     */
+    void doSelftest() throws Exception;
 }
-

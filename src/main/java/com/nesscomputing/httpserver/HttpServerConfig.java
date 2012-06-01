@@ -25,10 +25,10 @@ import org.skife.config.TimeSpan;
 public abstract class HttpServerConfig
 {
     @Config("ness.httpserver.class")
-    @Default("com.nesscomputing.httpserver.GalaxyJetty7HttpServer")
+    @Default("com.nesscomputing.httpserver.GalaxyJetty8HttpServer")
     public Class<? extends HttpServer> getServerClass()
     {
-        return GalaxyJetty7HttpServer.class;
+        return GalaxyJetty8HttpServer.class;
     }
 
     @Config("ness.httpserver.internal.http")
