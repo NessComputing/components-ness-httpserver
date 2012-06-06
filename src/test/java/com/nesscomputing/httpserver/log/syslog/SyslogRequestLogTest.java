@@ -139,7 +139,7 @@ public class SyslogRequestLogTest extends EasyMockSupport
         });
     }
 
-    public void testMockRequest(Module extra)
+    private void testMockRequest(Module extra)
     {
         final Config config = Config.getFixedConfig("ness.httpserver.request-log.syslog.enabled", "true",
                                                     "ness.httpserver.request-log.syslog.protocol", "fake");
