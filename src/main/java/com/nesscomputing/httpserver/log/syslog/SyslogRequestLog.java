@@ -133,8 +133,8 @@ public class SyslogRequestLog extends AbstractLifeCycle implements RequestLog
         builderMap.put("l@" + ianaIdentifier, logBuilder);
 
         if (galaxyConfig != null) {
-            logBuilder.put("si", galaxyConfig.getEnv().getAgentId());
-            logBuilder.put("sc", galaxyConfig.getDeploy().getConfig());
+            logBuilder.put("si", String.valueOf(galaxyConfig.getEnv().getAgentId()));
+            logBuilder.put("sc", String.valueOf(galaxyConfig.getDeploy().getConfig()));
         }
 
         for (Iterator<String> it = logFields.iterator(); it.hasNext(); ) {

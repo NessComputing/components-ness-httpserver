@@ -32,6 +32,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.CreationException;
 import com.google.inject.Guice;
@@ -41,6 +42,8 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.nesscomputing.config.Config;
+import com.nesscomputing.config.ConfigModule;
+import com.nesscomputing.galaxy.GalaxyConfig;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
 import com.nesscomputing.httpserver.log.syslog.SyslogRequestLog;
 import com.nesscomputing.httpserver.log.syslog.SyslogRequestLogModule;
@@ -115,7 +118,28 @@ public class SyslogRequestLogTest extends EasyMockSupport
     }
 
     @Test
-    public void testMockRequest()
+    public void testMockRequestWithNullGalaxy()
+    {
+        testMockRequest(new Module() {
+            @Override
+            public void configure(Binder binder) {
+                // empty
+            }
+        });
+    }
+
+    @Test
+    public void testMockRequestWithEmptyGalaxyConfig()
+    {
+        testMockRequest(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(GalaxyConfig.class);
+            }
+        });
+    }
+
+    public void testMockRequest(Module extra)
     {
         final Config config = Config.getFixedConfig("ness.httpserver.request-log.syslog.enabled", "true",
                                                     "ness.httpserver.request-log.syslog.protocol", "fake");
@@ -131,7 +155,7 @@ public class SyslogRequestLogTest extends EasyMockSupport
         final FakeSyslog fakeSyslog = FakeSyslog.class.cast(Syslog.getInstance("fake"));
         Assert.assertNotNull(fakeSyslog);
 
-        final Injector inj = Guice.createInjector(Stage.PRODUCTION, disableStuff(), new LogFieldsModule(), new SyslogRequestLogModule(config));
+        final Injector inj = Guice.createInjector(Stage.PRODUCTION, disableStuff(), new LogFieldsModule(), new SyslogRequestLogModule(config), new ConfigModule(config), extra);
         inj.injectMembers(this);
         Assert.assertNotNull(syslogRequestLog);
 
@@ -164,6 +188,8 @@ public class SyslogRequestLogTest extends EasyMockSupport
         Assert.assertNotNull(levels);
         Assert.assertEquals(1, levels.size());
         Assert.assertEquals(SyslogLevel.INFO, levels.get(0));
+
+        Syslog.destroyInstance("fake");
     }
 
     private Module disableStuff()
