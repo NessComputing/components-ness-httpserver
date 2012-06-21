@@ -20,9 +20,14 @@ import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import com.google.inject.Inject;
 
 @Path("/selftest")
+@Produces(MediaType.APPLICATION_JSON)
 public class SelftestResource {
 
     private Set<Selftest> tests = Collections.emptySet();
@@ -41,9 +46,11 @@ public class SelftestResource {
 	 * On failure, returns a 5xx response
 	 */
 	@GET
-	public void doSelftest() throws Exception {
+	public Response doSelftest() throws Exception {
 		for (Selftest test : tests) {
 		    test.doSelftest();
 		}
+
+		return Response.ok().build();
 	}
 }
