@@ -182,13 +182,13 @@ public class GalaxyJetty8HttpServer implements HttpServer
 
         final HandlerCollection handlerCollection = new HandlerCollection();
 
+        handlerCollection.addHandler(createGuiceContext());
+
         if (handlers != null) {
             for (Handler handler : handlers) {
                 handlerCollection.addHandler(handler);
             }
         }
-
-        handlerCollection.addHandler(createGuiceContext());
 
         final StatisticsHandler statsHandler = new StatisticsHandler();
 
