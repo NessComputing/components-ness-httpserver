@@ -42,7 +42,7 @@ public class SyslogRequestLogModule extends AbstractModule
         if (syslogRequestLogConfig.isEnabled()) {
             bind (SyslogRequestLogConfig.class).toInstance(syslogRequestLogConfig);
             bind(SyslogRequestLog.class).in(Scopes.SINGLETON);
-            HttpServerHandlerBinder.bindHandler(binder()).toProvider(HandlerProvider.class);
+            HttpServerHandlerBinder.bindLoggingHandler(binder()).toProvider(HandlerProvider.class);
         }
     }
 
