@@ -42,7 +42,7 @@ public class Log4jRequestLogModule extends AbstractModule
         if (log4jRequestLogConfig.isEnabled()) {
             bind (Log4jRequestLogConfig.class).toInstance(log4jRequestLogConfig);
             bind(Log4jRequestLog.class).in(Scopes.SINGLETON);
-            HttpServerHandlerBinder.bindHandler(binder()).toProvider(HandlerProvider.class);
+            HttpServerHandlerBinder.bindLoggingHandler(binder()).toProvider(HandlerProvider.class);
         }
     }
 

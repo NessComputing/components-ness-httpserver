@@ -17,6 +17,7 @@ package com.nesscomputing.httpserver;
 
 import static com.nesscomputing.httpserver.HttpServerHandlerBinder.CATCHALL_NAME;
 import static com.nesscomputing.httpserver.HttpServerHandlerBinder.HANDLER_NAME;
+import static com.nesscomputing.httpserver.HttpServerHandlerBinder.LOGGING_NAME;
 import static com.nesscomputing.httpserver.HttpServerHandlerBinder.SECURITY_NAME;
 
 import java.util.EnumSet;
@@ -68,6 +69,7 @@ public class GalaxyJetty8HttpServer implements HttpServer
 
     private MBeanServer mbeanServer = null;
     private Set<Handler> handlers = null;
+    private Set<Handler> loggingHandlers = null;
     private HandlerWrapper securityHandler = null;
     private GuiceFilter guiceFilter = null;
 
@@ -102,6 +104,12 @@ public class GalaxyJetty8HttpServer implements HttpServer
     void addHandlers(@Named(HANDLER_NAME) final Set<Handler> handlers)
     {
         this.handlers = handlers;
+    }
+
+    @Inject(optional=true)
+    void addLoggingHandlers(@Named(LOGGING_NAME) final Set<Handler> loggingHandlers)
+    {
+        this.loggingHandlers = loggingHandlers;
     }
 
     @Inject(optional=true)
@@ -189,6 +197,12 @@ public class GalaxyJetty8HttpServer implements HttpServer
         }
 
         handlerCollection.addHandler(createGuiceContext());
+
+        if (loggingHandlers != null) {
+            for (Handler loggingHandler : loggingHandlers) {
+                handlerCollection.addHandler(loggingHandler);
+            }
+        }
 
         final StatisticsHandler statsHandler = new StatisticsHandler();
 

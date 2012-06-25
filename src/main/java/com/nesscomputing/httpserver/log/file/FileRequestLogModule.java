@@ -42,7 +42,7 @@ public class FileRequestLogModule extends AbstractModule
         if (fileRequestLogConfig.isEnabled()) {
             bind (FileRequestLogConfig.class).toInstance(fileRequestLogConfig);
             bind(FileRequestLog.class).in(Scopes.SINGLETON);
-            HttpServerHandlerBinder.bindHandler(binder()).toProvider(HandlerProvider.class);
+            HttpServerHandlerBinder.bindLoggingHandler(binder()).toProvider(HandlerProvider.class);
         }
     }
 
