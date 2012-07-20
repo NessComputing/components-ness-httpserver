@@ -15,6 +15,7 @@
  */
 package com.nesscomputing.httpserver;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.skife.config.Config;
@@ -153,5 +154,16 @@ public abstract class HttpServerConfig
     @Default("false")
     public boolean isJmxEnabled() {
         return false;
+    }
+
+    /**
+     * Sets the location on the filesystem that is returned as the base
+     * path from servlets and static content handlers.
+     */
+    @Config("ness.httpserver.servlet-context-basepath")
+    @DefaultNull
+    public File getServletContextBasePath()
+    {
+        return null;
     }
 }
