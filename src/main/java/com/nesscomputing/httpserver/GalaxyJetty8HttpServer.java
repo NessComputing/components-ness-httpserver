@@ -20,6 +20,7 @@ import static com.nesscomputing.httpserver.HttpServerHandlerBinder.HANDLER_NAME;
 import static com.nesscomputing.httpserver.HttpServerHandlerBinder.LOGGING_NAME;
 import static com.nesscomputing.httpserver.HttpServerHandlerBinder.SECURITY_NAME;
 
+import java.io.File;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -300,6 +301,11 @@ public class GalaxyJetty8HttpServer implements HttpServer
     private ServletContextHandler createGuiceContext()
     {
         final ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+
+        final File basePath = httpServerConfig.getServletContextBasePath();
+        if (basePath != null && basePath.exists() && basePath.canRead() && basePath.isDirectory()) {
+            context.setResourceBase(basePath.getAbsolutePath());
+        }
 
         if (guiceFilter != null) {
             final FilterHolder filterHolder = new FilterHolder(guiceFilter);
