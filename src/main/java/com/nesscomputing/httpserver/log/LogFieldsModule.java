@@ -31,6 +31,7 @@ import com.nesscomputing.httpserver.log.LogFields.RequestDateHeaderField;
 import com.nesscomputing.httpserver.log.LogFields.RequestHeaderField;
 import com.nesscomputing.httpserver.log.LogFields.RequestUriField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseCodeField;
+import com.nesscomputing.httpserver.log.LogFields.ResponseContentLengthField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseContentTypeField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseHeaderField;
 import com.nesscomputing.httpserver.log.LogFields.ThreadNameField;
@@ -46,6 +47,7 @@ public class LogFieldsModule extends AbstractModule
         LogFieldBinder.bindField(binder(), "requestDateHeader").to(RequestDateHeaderField.class).in(Scopes.SINGLETON); // Normalizes HTTP dates to ISO dates
         LogFieldBinder.bindField(binder(), "responseHeader").to(ResponseHeaderField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "requestContentLength").to(RequestContentLengthField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "responseContentLength").to(ResponseContentLengthField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "requestContentType").to(RequestContentTypeField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "responseContentType").to(ResponseContentTypeField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "method").to(MethodField.class).in(Scopes.SINGLETON);
