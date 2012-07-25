@@ -219,6 +219,25 @@ public final class LogFields
         }
     }
 
+    public static class ResponseContentLengthField implements LogField
+    {
+        ResponseContentLengthField()
+        {
+        }
+
+        @Override
+        public Object log(Request request, Response response, String dummy)
+        {
+            return response.getContentCount();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "cc";
+        }
+    }
+
     public static class RequestHeaderField implements LogField
     {
         RequestHeaderField()
