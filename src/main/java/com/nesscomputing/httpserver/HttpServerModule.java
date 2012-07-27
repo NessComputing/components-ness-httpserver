@@ -20,6 +20,7 @@ import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.ServletModule;
 import com.nesscomputing.config.Config;
+import com.nesscomputing.config.ConfigProvider;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
 import com.nesscomputing.httpserver.log.file.FileRequestLogModule;
 import com.nesscomputing.httpserver.log.log4j.Log4jRequestLogModule;
@@ -42,6 +43,7 @@ public class HttpServerModule extends ServletModule
     {
         final HttpServerConfig httpServerConfig = config.getBean(HttpServerConfig.class);
         bind(HttpServerConfig.class).toInstance(httpServerConfig);
+        bind(GalaxyHttpServerConfig.class).toProvider(ConfigProvider.of(GalaxyHttpServerConfig.class)).in(Scopes.SINGLETON);
 
         // Bind the legacy CONTEXT_PATH_NAME constants to the first path in the service. Do we actually still need that?
         bindConstant().annotatedWith(Names.named(CONTEXT_PATH_NAME)).to("");
