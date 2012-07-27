@@ -32,34 +32,6 @@ public abstract class HttpServerConfig
         return GalaxyJetty8HttpServer.class;
     }
 
-    @Config("ness.httpserver.internal.http")
-    @Default("true")
-    public boolean isInternalHttpEnabled()
-    {
-        return true;
-    }
-
-    @Config("ness.httpserver.internal.https")
-    @Default("false")
-    public boolean isInternalHttpsEnabled()
-    {
-        return false;
-    }
-
-    @Config("ness.httpserver.external.http")
-    @Default("false")
-    public boolean isExternalHttpEnabled()
-    {
-        return false;
-    }
-
-    @Config("ness.httpserver.external.https")
-    @Default("false")
-    public boolean isExternalHttpsEnabled()
-    {
-        return false;
-    }
-
     /**
      * Use the X-Forwarded-For headers to set remote host, port etc. instead of
      * the host connecting.

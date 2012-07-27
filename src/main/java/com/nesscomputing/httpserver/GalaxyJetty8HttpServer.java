@@ -33,11 +33,14 @@ public class GalaxyJetty8HttpServer extends AbstractJetty8HttpServer implements 
     private final Map<String, HttpConnector> httpConnectors;
 
     @Inject
-    public GalaxyJetty8HttpServer(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig, @Named(CATCHALL_NAME) final Servlet catchallServlet)
+    GalaxyJetty8HttpServer(final GalaxyConfig galaxyConfig,
+                           final GalaxyHttpServerConfig galaxyHttpServerConfig,
+                           final HttpServerConfig httpServerConfig,
+                           @Named(CATCHALL_NAME) final Servlet catchallServlet)
     {
         super(httpServerConfig, catchallServlet);
 
-        this.httpConnectors = buildConnectors(httpServerConfig, galaxyConfig);
+        this.httpConnectors = buildConnectors(galaxyHttpServerConfig, galaxyConfig);
     }
 
     @Override
@@ -46,26 +49,26 @@ public class GalaxyJetty8HttpServer extends AbstractJetty8HttpServer implements 
         return httpConnectors;
     }
 
-    private static Map<String, HttpConnector> buildConnectors(final HttpServerConfig httpServerConfig, final GalaxyConfig galaxyConfig)
+    private static Map<String, HttpConnector> buildConnectors(final GalaxyHttpServerConfig galaxyHttpServerConfig, final GalaxyConfig galaxyConfig)
     {
         final GalaxyIp internalIp = galaxyConfig.getInternalIp();
         final GalaxyIp externalIp = galaxyConfig.getExternalIp();
 
         final Builder<String, HttpConnector> builder = ImmutableMap.<String, HttpConnector>builder();
 
-        if (httpServerConfig.isInternalHttpEnabled()) {
+        if (galaxyHttpServerConfig.isInternalHttpEnabled()) {
             builder.put("internal-http", new HttpConnector(false, "http", internalIp.getIp(), internalIp.getHttpPort()));
         }
 
-        if (httpServerConfig.isInternalHttpsEnabled()) {
+        if (galaxyHttpServerConfig.isInternalHttpsEnabled()) {
             builder.put("internal-https", new HttpConnector(true, "https", internalIp.getIp(), internalIp.getHttpsPort()));
         }
 
-        if (httpServerConfig.isExternalHttpEnabled()) {
+        if (galaxyHttpServerConfig.isExternalHttpEnabled()) {
             builder.put("external-http", new HttpConnector(false, "http", externalIp.getIp(), internalIp.getHttpPort()));
         }
 
-        if (httpServerConfig.isExternalHttpsEnabled()) {
+        if (galaxyHttpServerConfig.isExternalHttpsEnabled()) {
             builder.put("external-https", new HttpConnector(true, "https", externalIp.getIp(), internalIp.getHttpsPort()));
         }
 
