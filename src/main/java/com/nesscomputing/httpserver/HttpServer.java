@@ -15,6 +15,8 @@
  */
 package com.nesscomputing.httpserver;
 
+import java.util.Map;
+
 /**
  * Represents an HTTP server. It can be started and stopped.
  */
@@ -31,36 +33,59 @@ public interface HttpServer
     void stop();
 
     /**
-     * @return the internal address this HttpServer listens on.  null if no such interface, empty string for wildcard bind
+     * @return the internal address this HttpServer listens on.  null if no such interface, empty string for wildcard bind.
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     String getInternalAddress();
 
     /**
-     * @return the external address this HttpServer listens on.  null if no such interface, empty string for wildcard bind
+     * @return the external address this HttpServer listens on.  null if no such interface, empty string for wildcard bind.
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     String getExternalAddress();
 
     /**
      * Return the actual internal http port this server listens to.  Mostly useful when you configure the http server on a port of "0" to get an unused port.
-     * @return the actual port this server listens on
+     * @return the actual port this server listens on.
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     int getInternalHttpPort();
 
     /**
      * Return the actual internal https port this server listens to.  Mostly useful when you configure the http server on a port of "0" to get an unused port.
-     * @return the actual port this server listens on
+     * @return the actual port this server listens on.
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     int getInternalHttpsPort();
 
     /**
      * Return the actual external http port this server listens to.  Mostly useful when you configure the http server on a port of "0" to get an unused port.
-     * @return the actual port this server listens on
+     * @return the actual port this server listens on.
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     int getExternalHttpPort();
 
     /**
      * Return the actual external https port this server listens to.  Mostly useful when you configure the http server on a port of "0" to get an unused port.
      * @return the actual port this server listens on
+     *
+     * @deprecated Use {@link HttpServer#getConnectors()}.
      */
+    @Deprecated
     int getExternalHttpsPort();
+
+    /**
+     * Return a map of connectors configured for this server. The key in the map can be used to distinguish the connectors.
+     */
+    Map<String, HttpConnector> getConnectors();
 }

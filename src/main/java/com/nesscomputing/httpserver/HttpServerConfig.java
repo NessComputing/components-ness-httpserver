@@ -60,30 +60,13 @@ public abstract class HttpServerConfig
         return false;
     }
 
-    @Config("ness.httpserver.internal.http-forwarded")
+    /**
+     * Use the X-Forwarded-For headers to set remote host, port etc. instead of
+     * the host connecting.
+     */
+    @Config("ness.httpserver.forwarded")
     @Default("false")
-    public boolean isInternalHttpForwarded()
-    {
-        return false;
-    }
-
-    @Config("ness.httpserver.internal.https-forwarded")
-    @Default("false")
-    public boolean isInternalHttpsForwarded()
-    {
-        return false;
-    }
-
-    @Config("ness.httpserver.external.http-forwarded")
-    @Default("false")
-    public boolean isExternalHttpForwarded()
-    {
-        return false;
-    }
-
-    @Config("ness.httpserver.external.https-forwarded")
-    @Default("false")
-    public boolean isExternalHttpsForwarded()
+    public boolean isForwarded()
     {
         return false;
     }
