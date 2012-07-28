@@ -24,6 +24,7 @@
 
   <properties>
     <dep.jetty.version>8.1.3.v20120416</dep.jetty.version>
+    <dep.ness.httpclient.version>1.0.1</dep.ness.httpclient.version>
   </properties>
 
   <dependencies>
@@ -200,8 +201,16 @@
     <dependency>
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-httpclient</artifactId>
-      <version>1.0.1</version>
+      <version>${dep.ness.httpclient.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nesscomputing.components</groupId>
+      <artifactId>ness-httpclient</artifactId>
+      <version>${dep.ness.httpclient.version}</version>
+      <scope>test</scope>
+      <type>test-jar</type>
     </dependency>
   </dependencies>
 </project>

@@ -44,6 +44,7 @@ public class HttpServerModule extends ServletModule
         final HttpServerConfig httpServerConfig = config.getBean(HttpServerConfig.class);
         bind(HttpServerConfig.class).toInstance(httpServerConfig);
         bind(GalaxyHttpServerConfig.class).toProvider(ConfigProvider.of(GalaxyHttpServerConfig.class)).in(Scopes.SINGLETON);
+        bind(SoloHttpServerConfig.class).toProvider(ConfigProvider.of(SoloHttpServerConfig.class)).in(Scopes.SINGLETON);
 
         // Bind the legacy CONTEXT_PATH_NAME constants to the first path in the service. Do we actually still need that?
         bindConstant().annotatedWith(Names.named(CONTEXT_PATH_NAME)).to("");

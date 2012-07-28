@@ -195,6 +195,8 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
                 continue;
             }
 
+            connectors.add(connector);
+
             final SelectChannelConnector jettyConnector;
 
             if (connector.isSecure()) {
