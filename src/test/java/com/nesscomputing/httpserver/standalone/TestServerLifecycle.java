@@ -29,6 +29,7 @@ import com.nesscomputing.testing.lessio.AllowNetworkListen;
 
 @AllowNetworkListen(ports= {0})
 @AllowNetworkAccess(endpoints= {"127.0.0.1:0"})
+@SuppressWarnings("deprecation")
 public class TestServerLifecycle
 {
     private StandaloneServer server = null;
