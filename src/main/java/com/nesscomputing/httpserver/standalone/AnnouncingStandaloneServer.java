@@ -15,16 +15,18 @@
  */
 package com.nesscomputing.httpserver.standalone;
 
+import com.google.inject.Module;
 import com.nesscomputing.lifecycle.LifecycleStage;
 import com.nesscomputing.lifecycle.ServiceDiscoveryLifecycle;
 import com.nesscomputing.lifecycle.guice.LifecycleModule;
 
-import com.google.inject.Module;
-
 /**
  * Standalone server that uses the ServiceDiscovery Lifecycle. No additional
  * announcements etc. are done.
+ *
+ * @deprecated Use {@link com.nesscomputing.server.AnnouncingStandaloneServer}.
  */
+@Deprecated
 public abstract class AnnouncingStandaloneServer extends StandaloneServer
 {
     @Override

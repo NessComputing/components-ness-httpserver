@@ -48,7 +48,10 @@ import com.nesscomputing.logging.Log;
  *  <li>TrumpetConfig - A configuration path to load from the config URI</li>
  *  <li>TrumpetLog4JConfig - An URI to load the logging configuration from.</li>
  * </ul>
+ *
+ * @deprecated Use {@link com.nesscomputing.server.StandaloneServer}.
  */
+@Deprecated
 public abstract class StandaloneServer
 {
     private static final Log LOG = Log.findLog();
