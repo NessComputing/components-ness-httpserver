@@ -18,8 +18,8 @@ package com.nesscomputing.httpserver.standalone;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.nesscomputing.config.Config;
-import com.nesscomputing.httpserver.standalone.AnnouncingStandaloneServer;
 
+@SuppressWarnings("deprecation")
 class AnnouncingDemoServer extends AnnouncingStandaloneServer
 {
     private static AnnouncingDemoServer server = null;

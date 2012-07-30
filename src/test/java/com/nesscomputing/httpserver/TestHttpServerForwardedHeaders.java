@@ -83,7 +83,7 @@ public class TestHttpServerForwardedHeaders
         baseUri = format("http://localhost:%d/foobar", port);
 
         final Config config = Config.getFixedConfig("galaxy.internal.port.http", Integer.toString(port),
-                                                    "ness.httpserver.internal.http-forwarded", "true");
+                                                    "ness.httpserver.forwarded", "true");
 
         handler = new RecordingHandlerWrapper(new ClasspathResourceHandler("/foobar", "/test-resources"));
 

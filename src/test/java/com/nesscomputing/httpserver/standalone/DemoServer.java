@@ -20,6 +20,7 @@ import com.google.inject.Module;
 import com.nesscomputing.config.Config;
 import com.nesscomputing.httpserver.standalone.StandaloneServer;
 
+@SuppressWarnings("deprecation")
 class DemoServer extends StandaloneServer
 {
     private static DemoServer server = null;
