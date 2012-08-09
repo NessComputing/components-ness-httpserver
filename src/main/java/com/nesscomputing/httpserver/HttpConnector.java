@@ -15,6 +15,8 @@
  */
 package com.nesscomputing.httpserver;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -33,7 +35,7 @@ public class HttpConnector
     private final String address;
     private final String scheme;
 
-    private transient Connector connector = null;
+    private final AtomicReference<Connector> connectorHolder = new AtomicReference<Connector>(null);
 
 
     public HttpConnector(final boolean secure,
@@ -63,7 +65,7 @@ public class HttpConnector
      */
     void setJettyConnector(final Connector connector)
     {
-        this.connector = connector;
+        this.connectorHolder.set(connector);
     }
 
     /**
@@ -73,12 +75,16 @@ public class HttpConnector
     {
         if (port != 0) {
             return port;
-        } else if (connector != null) {
-            Preconditions.checkState(connector.getLocalPort() > 0, "no port was set and the connector is not yet started!");
-            return connector.getLocalPort();
         }
         else {
-            return 0;
+            final Connector connector = connectorHolder.get();
+            if (connector != null) {
+                Preconditions.checkState(connector.getLocalPort() > 0, "no port was set and the connector is not yet started!");
+                return connector.getLocalPort();
+            }
+            else {
+                return 0;
+            }
         }
     }
 
