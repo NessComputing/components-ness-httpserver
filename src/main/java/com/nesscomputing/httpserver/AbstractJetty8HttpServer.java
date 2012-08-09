@@ -178,7 +178,6 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
         catch (Exception e) {
             throw Throwables.propagate(e);
         }
-
         Preconditions.checkState(server.isRunning(), "Server did not start");
     }
 
@@ -216,6 +215,10 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
 
             jettyConnector.setPort(connector.getPort());
             jettyConnector.setHost(connector.getAddress());
+
+            // If the provided port was 0, jetty should choose a port on its own.
+            // update the connector information accordingly.
+            connector.setJettyConnector(jettyConnector);
 
             jettyConnector.setStatsOn(true);
 

@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.eclipse.jetty.server.Connector;
 
 import com.google.common.base.Preconditions;
 
@@ -32,6 +33,8 @@ public class HttpConnector
     private final String address;
     private final String scheme;
 
+    private transient Connector connector = null;
+
 
     public HttpConnector(final boolean secure,
                          @Nonnull final String scheme,
@@ -40,7 +43,6 @@ public class HttpConnector
     {
         Preconditions.checkNotNull(scheme, "the scheme can not be null");
         Preconditions.checkNotNull(address, "the address can not be null");
-        Preconditions.checkArgument(port > 0, "the port must be > 0");
 
         this.secure = secure;
         this.scheme = scheme;
@@ -57,11 +59,27 @@ public class HttpConnector
     }
 
     /**
+     * Will be called when jetty should choose a port to update the port information.
+     */
+    void setJettyConnector(final Connector connector)
+    {
+        this.connector = connector;
+    }
+
+    /**
      * Returns the system port for this connector.
      */
     public int getPort()
     {
-        return port;
+        if (port != 0) {
+            return port;
+        } else if (connector != null) {
+            Preconditions.checkState(connector.getLocalPort() > 0, "no port was set and the connector is not yet started!");
+            return connector.getLocalPort();
+        }
+        else {
+            return 0;
+        }
     }
 
     /**
@@ -103,7 +121,6 @@ public class HttpConnector
 
     private transient String toString;
 
-
     @Override
     public String toString()
     {
@@ -112,6 +129,4 @@ public class HttpConnector
         }
         return toString;
     }
-
-
 }
