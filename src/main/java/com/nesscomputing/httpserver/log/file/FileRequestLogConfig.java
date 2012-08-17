@@ -28,7 +28,7 @@ import com.google.common.collect.ImmutableSet;
 public abstract class FileRequestLogConfig
 {
     public static final String REQUEST_LOG_FIELDS_DEFAULT =
-        "timestamp,threadName,responseHeader:X-Trumpet-Track,remoteAddr,cookie:trumpet-json-api-authorization,method,requestUri,query,responseCode,responseHeader:Content-Length,elapsedTime";
+        "timestamp,threadName,responseHeader:X-Trumpet-Track,remoteAddr,requestHeader:Authorization,method,requestUri,query,responseCode,responseHeader:Content-Length,elapsedTime";
 
     @Config("blacklist")
     @Default("/selftest, /application.wadl")
