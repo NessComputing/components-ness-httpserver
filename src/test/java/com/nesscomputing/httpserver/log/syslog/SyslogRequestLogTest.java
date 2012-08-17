@@ -20,9 +20,6 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
-
-
 import org.easymock.EasyMockSupport;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
@@ -168,8 +165,7 @@ public class SyslogRequestLogTest extends EasyMockSupport
         expect(req.getTimeStamp()).andReturn(10000L).anyTimes();
         expect(req.getRemoteAddr()).andReturn("1.2.3.4").anyTimes();
 
-        final Cookie[] cookies = {new Cookie("trumpet-JSON-api-AUTHORIZATION", "omgwtfbbq")};
-        expect(req.getCookies()).andReturn(cookies).anyTimes();
+        expect(req.getHeader("Authorization")).andReturn("omgwtfbbq").anyTimes();
         expect(req.getMethod()).andReturn("GET").anyTimes();
         expect(req.getQueryString()).andReturn("bar=baz").anyTimes();
         expect(resp.getStatus()).andReturn(200).anyTimes();
