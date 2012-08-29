@@ -273,6 +273,7 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
         return context;
     }
 
+    @Override
     public abstract Map<String, HttpConnector> getConnectors();
 
     @Override
