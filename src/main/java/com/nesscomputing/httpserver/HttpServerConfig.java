@@ -72,7 +72,7 @@ public abstract class HttpServerConfig
     }
 
     @Config("ness.httpserver.shutdown-timeout")
-    @Default("1s")
+    @DefaultNull
     public TimeSpan getShutdownTimeout()
     {
     	return new TimeSpan(1, TimeUnit.SECONDS);
