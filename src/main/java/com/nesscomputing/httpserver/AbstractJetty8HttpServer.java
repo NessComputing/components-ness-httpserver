@@ -43,7 +43,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Sets;
@@ -242,6 +241,13 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
         catch (Exception e) {
             throw Throwables.propagate(e);
         }
+        // Jetty Server instances are held by the ShutdownThread, and may not be GCed
+        // Normally this isn't too big of a problem, but in test cases many Server instances may
+        // start and stop.  Deregister it manually, and release the Handler (which holds all our stuff)
+        // so it can GC even if someone else holds a Server reference
+        server.setHandler(null);
+        server.setStopAtShutdown(false);
+
         Preconditions.checkState(server.isStopped(), "Server did not stop");
         server = null;
     }
@@ -267,6 +273,7 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
         return context;
     }
 
+    @Override
     public abstract Map<String, HttpConnector> getConnectors();
 
     @Override
