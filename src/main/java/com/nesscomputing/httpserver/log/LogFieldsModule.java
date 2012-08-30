@@ -18,6 +18,7 @@ package com.nesscomputing.httpserver.log;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+
 import com.nesscomputing.httpserver.log.LogFields.AttributeField;
 import com.nesscomputing.httpserver.log.LogFields.CookieField;
 import com.nesscomputing.httpserver.log.LogFields.ElapsedTimeField;
@@ -34,6 +35,11 @@ import com.nesscomputing.httpserver.log.LogFields.ResponseCodeField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseContentLengthField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseContentTypeField;
 import com.nesscomputing.httpserver.log.LogFields.ResponseHeaderField;
+import com.nesscomputing.httpserver.log.LogFields.ServerInfoBinaryField;
+import com.nesscomputing.httpserver.log.LogFields.ServerInfoModeField;
+import com.nesscomputing.httpserver.log.LogFields.ServerInfoTokenField;
+import com.nesscomputing.httpserver.log.LogFields.ServerInfoTypeField;
+import com.nesscomputing.httpserver.log.LogFields.ServerInfoVersionField;
 import com.nesscomputing.httpserver.log.LogFields.ThreadNameField;
 import com.nesscomputing.httpserver.log.LogFields.TimestampField;
 
@@ -60,5 +66,10 @@ public class LogFieldsModule extends AbstractModule
         LogFieldBinder.bindField(binder(), "threadName").to(ThreadNameField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "elapsedTime").to(ElapsedTimeField.class).in(Scopes.SINGLETON);
         LogFieldBinder.bindField(binder(), "mdcField").to(MDCField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "serverInfoBinary").to(ServerInfoBinaryField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "serverInfoVersion").to(ServerInfoVersionField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "serverInfoMode").to(ServerInfoModeField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "serverInfoType").to(ServerInfoTypeField.class).in(Scopes.SINGLETON);
+        LogFieldBinder.bindField(binder(), "serverInfoToken").to(ServerInfoTokenField.class).in(Scopes.SINGLETON);
     }
 }

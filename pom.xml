@@ -19,7 +19,7 @@
   <groupId>com.nesscomputing.components</groupId>
   <artifactId>ness-httpserver</artifactId>
   <name>httpserver</name>
-  <version>2.1.4-SNAPSHOT</version>
+  <version>2.2.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Ness HTTP server component. Can be plugged into a service to make it start up on its own.</description>
 
@@ -63,6 +63,12 @@
       <groupId>com.nesscomputing.components</groupId>
       <artifactId>ness-galaxy</artifactId>
       <version>1.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nesscomputing.components</groupId>
+      <artifactId>ness-serverinfo</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
     <dependency>
