@@ -28,6 +28,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 
+import com.nesscomputing.serverinfo.ServerInfo;
+
 public final class LogFields
 {
     private LogFields()
@@ -378,6 +380,106 @@ public final class LogFields
         public String getShortName()
         {
             return "tn";
+        }
+    }
+
+    public static class ServerInfoBinaryField implements LogField
+    {
+        ServerInfoBinaryField()
+        {
+        }
+
+        @Override
+        public String log(Request request, Response response, String dummy)
+        {
+            final Object value = ServerInfo.get(ServerInfo.SERVER_BINARY);
+            return value == null ? null : value.toString();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "sib";
+        }
+    }
+
+    public static class ServerInfoVersionField implements LogField
+    {
+        ServerInfoVersionField()
+        {
+        }
+
+        @Override
+        public String log(Request request, Response response, String dummy)
+        {
+            final Object value = ServerInfo.get(ServerInfo.SERVER_VERSION);
+            return value == null ? null : value.toString();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "siv";
+        }
+    }
+
+    public static class ServerInfoModeField implements LogField
+    {
+        ServerInfoModeField()
+        {
+        }
+
+        @Override
+        public String log(Request request, Response response, String dummy)
+        {
+            final Object value = ServerInfo.get(ServerInfo.SERVER_MODE);
+            return value == null ? null : value.toString();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "sim";
+        }
+    }
+
+    public static class ServerInfoTypeField implements LogField
+    {
+        ServerInfoTypeField()
+        {
+        }
+
+        @Override
+        public String log(Request request, Response response, String dummy)
+        {
+            final Object value = ServerInfo.get(ServerInfo.SERVER_TYPE);
+            return value == null ? null : value.toString();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "sit";
+        }
+    }
+
+    public static class ServerInfoTokenField implements LogField
+    {
+        ServerInfoTokenField()
+        {
+        }
+
+        @Override
+        public String log(Request request, Response response, String dummy)
+        {
+            final Object value = ServerInfo.get(ServerInfo.SERVER_TOKEN);
+            return value == null ? null : value.toString();
+        }
+
+        @Override
+        public String getShortName()
+        {
+            return "sio";
         }
     }
 

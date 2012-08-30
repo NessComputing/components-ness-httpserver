@@ -30,7 +30,9 @@ import com.nesscomputing.syslog4j.SyslogFacility;
 public abstract class SyslogRequestLogConfig
 {
     public static final String REQUEST_LOG_FIELDS_DEFAULT =
-        "responseHeader:X-Trumpet-Track,remoteAddr,requestHeader:Authorization,method,requestUri,query,responseCode,responseHeader:Content-Length,elapsedTime";
+        "responseHeader:X-Trumpet-Track,remoteAddr,responseHeader:Content-Length," +
+        "requestHeader:Authorization,requestHeader:X-Ness-Server-Type,requestHeader:X-Ness-Server-Token," +
+        "method,requestUri,query,responseCode,elapsedTime,serverInfoBinary,serverInfoVersion,serverInfoType,serverInfoToken";
 
     @Config("blacklist")
     @Default("/selftest, /application.wadl")

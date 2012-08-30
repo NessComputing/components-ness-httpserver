@@ -19,6 +19,7 @@ import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.fail;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.easymock.EasyMockSupport;
 import org.eclipse.jetty.server.Request;
@@ -138,10 +139,11 @@ public class SyslogRequestLogTest extends EasyMockSupport
 
     private void testMockRequest(Module extra)
     {
+        final String logName = "fake-" + UUID.randomUUID().toString();
         final Config config = Config.getFixedConfig("ness.httpserver.request-log.syslog.enabled", "true",
-                                                    "ness.httpserver.request-log.syslog.protocol", "fake");
+                                                    "ness.httpserver.request-log.syslog.protocol", logName);
 
-        Syslog.createInstance("fake", new AbstractNetSyslogConfig() {
+        Syslog.createInstance(logName, new AbstractNetSyslogConfig() {
 
             @Override
             public Class<? extends SyslogIF> getSyslogClass() {
@@ -149,7 +151,7 @@ public class SyslogRequestLogTest extends EasyMockSupport
             }
         });
 
-        final FakeSyslog fakeSyslog = FakeSyslog.class.cast(Syslog.getInstance("fake"));
+        final FakeSyslog fakeSyslog = FakeSyslog.class.cast(Syslog.getInstance(logName));
         Assert.assertNotNull(fakeSyslog);
 
         final Injector inj = Guice.createInjector(Stage.PRODUCTION, disableStuff(), new LogFieldsModule(), new SyslogRequestLogModule(config), new ConfigModule(config), extra);
@@ -166,6 +168,12 @@ public class SyslogRequestLogTest extends EasyMockSupport
         expect(req.getRemoteAddr()).andReturn("1.2.3.4").anyTimes();
 
         expect(req.getHeader("Authorization")).andReturn("omgwtfbbq").anyTimes();
+        expect(req.getHeader("X-Ness-Server-Type")).andReturn("fakeserver").anyTimes();
+        expect(req.getHeader("X-Ness-Server-Binary")).andReturn("fakeserver-server").anyTimes();
+        expect(req.getHeader("X-Ness-Server-Version")).andReturn("1.0.1").anyTimes();
+        expect(req.getHeader("X-Ness-Server-Token")).andReturn(UUID.randomUUID().toString()).anyTimes();
+        expect(req.getHeader("X-Ness-Server-Mode")).andReturn("unittest").anyTimes();
+
         expect(req.getMethod()).andReturn("GET").anyTimes();
         expect(req.getQueryString()).andReturn("bar=baz").anyTimes();
         expect(resp.getStatus()).andReturn(200).anyTimes();
@@ -185,7 +193,7 @@ public class SyslogRequestLogTest extends EasyMockSupport
         Assert.assertEquals(1, levels.size());
         Assert.assertEquals(SyslogLevel.INFO, levels.get(0));
 
-        Syslog.destroyInstance("fake");
+        Syslog.destroyInstance(logName);
     }
 
     private Module disableStuff()
