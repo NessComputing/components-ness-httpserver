@@ -17,8 +17,8 @@ package com.nesscomputing.httpserver.selftest;
 
 public interface Selftest {
     /**
-     * Check that service is available.
-     * @throw Exception the service is not available
+     * Check that service is available and in good state.
+     * @throw Exception the service is not available or not in a good state.
      */
     void doSelftest() throws Exception;
 }
