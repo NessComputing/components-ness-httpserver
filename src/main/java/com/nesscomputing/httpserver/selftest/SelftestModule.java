@@ -17,6 +17,7 @@ package com.nesscomputing.httpserver.selftest;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
+import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
@@ -31,6 +32,11 @@ public class SelftestModule extends AbstractModule
     public static LinkedBindingBuilder<Selftest> registerSelftest(final Binder binder)
     {
         return Multibinder.newSetBinder(binder, Selftest.class).addBinding();
+    }
+
+    public static AnnotatedBindingBuilder<DefaultSelftest> registerDefaultSelftest(final Binder binder)
+    {
+        return binder.bind(DefaultSelftest.class);
     }
 }
 

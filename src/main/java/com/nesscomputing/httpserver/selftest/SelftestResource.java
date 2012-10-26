@@ -31,6 +31,7 @@ import com.google.inject.Inject;
 public class SelftestResource {
 
     private Set<Selftest> tests = Collections.emptySet();
+    private DefaultSelftest defaultTest;
 
     @Inject
     SelftestResource() {
@@ -39,6 +40,11 @@ public class SelftestResource {
     @Inject(optional=true)
     public void setSelftests(Set<Selftest> tests) {
         this.tests = tests;
+    }
+
+    @Inject(optional=true)
+    public void setDefaultSelftest(DefaultSelftest defaultTest) {
+        this.defaultTest = defaultTest;
     }
 
 	/**
@@ -51,6 +57,11 @@ public class SelftestResource {
 		    test.doSelftest();
 		}
 
-		return Response.ok().build();
+		if (defaultTest != null) {
+		    return defaultTest.doSelftest();
+		}
+		else {
+		    return Response.ok().build();
+		}
 	}
 }
