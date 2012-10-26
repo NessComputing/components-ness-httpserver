@@ -31,6 +31,7 @@ import com.google.inject.Inject;
 public class SelftestResource {
 
     private Set<Selftest> tests = Collections.emptySet();
+    private DefaultSelftest defaultTest;
 
     @Inject
     SelftestResource() {
@@ -41,9 +42,16 @@ public class SelftestResource {
         this.tests = tests;
     }
 
+    @Inject(optional=true)
+    public void setDefaultSelftest(DefaultSelftest defaultTest) {
+        this.defaultTest = defaultTest;
+    }
+
 	/**
-	 * On success, does nothing interesting.
-	 * On failure, returns a 5xx response
+	 * On success, returns a 2xx response.
+	 * To report a warning-level issue, returns a 3xx response.
+	 * To report an error-level issue, returns a 5xx response
+	 * or throws an Exception.
 	 */
 	@GET
 	public Response doSelftest() throws Exception {
@@ -51,6 +59,11 @@ public class SelftestResource {
 		    test.doSelftest();
 		}
 
-		return Response.ok().build();
+		if (defaultTest != null) {
+		    return defaultTest.doSelftest();
+		}
+		else {
+		    return Response.ok().build();
+		}
 	}
 }
