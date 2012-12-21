@@ -58,17 +58,17 @@ public abstract class HttpServerConfig
     }
 
     @Config("ness.httpserver.thread-max-idletime")
-    @Default("30000")
-    public int getThreadMaxIdletime()
+    @Default("30s")
+    public TimeSpan getThreadMaxIdletime()
     {
-        return 30000;
+        return new TimeSpan(30, TimeUnit.SECONDS);
     }
 
     @Config("ness.httpserver.max-idletime")
-    @Default("30000")
-    public int getMaxIdletime()
+    @Default("30s")
+    public TimeSpan getMaxIdletime()
     {
-        return 30000;
+        return new TimeSpan(30, TimeUnit.SECONDS);
     }
 
     @Config("ness.httpserver.shutdown-timeout")

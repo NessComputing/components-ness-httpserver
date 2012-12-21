@@ -156,7 +156,7 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
 
         final QueuedThreadPool threadPool = new QueuedThreadPool(httpServerConfig.getMaxThreads());
         threadPool.setMinThreads(httpServerConfig.getMinThreads());
-        threadPool.setMaxIdleTimeMs(httpServerConfig.getThreadMaxIdletime());
+        threadPool.setMaxIdleTimeMs(Ints.saturatedCast(httpServerConfig.getThreadMaxIdletime().getMillis()));
         server.setThreadPool(threadPool);
 
         if (mbeanServer != null && httpServerConfig.isJmxEnabled()) {
@@ -222,7 +222,7 @@ public abstract class AbstractJetty8HttpServer implements HttpServer
             jettyConnector.setStatsOn(true);
 
             jettyConnector.setForwarded(httpServerConfig.isForwarded());
-            jettyConnector.setMaxIdleTime(httpServerConfig.getMaxIdletime());
+            jettyConnector.setMaxIdleTime(Ints.saturatedCast(httpServerConfig.getMaxIdletime().getMillis()));
             jettyConnector.setResponseHeaderSize(httpServerConfig.getResponseHeaderSize());
 
             LOG.debug("Adding connector [%s] as %s", connectorName, connector);
