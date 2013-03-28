@@ -13,13 +13,13 @@
     <connection>scm:git:git://github.com/NessComputing/components-ness-httpserver.git</connection>
     <developerConnection>scm:git:git@github.com:NessComputing/components-ness-httpserver.git</developerConnection>
     <url>http://github.com/NessComputing/components-ness-httpserver</url>
-    <tag>HEAD</tag>
+    <tag>ness-httpserver-2.3.0</tag>
   </scm>
 
   <groupId>com.nesscomputing.components</groupId>
   <artifactId>ness-httpserver</artifactId>
   <name>httpserver</name>
-  <version>2.3.0-SNAPSHOT</version>
+  <version>2.3.0</version>
   <packaging>jar</packaging>
   <description>Ness HTTP server component. Can be plugged into a service to make it start up on its own.</description>
 
