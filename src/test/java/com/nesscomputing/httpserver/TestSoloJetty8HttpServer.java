@@ -21,11 +21,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.google.common.io.Resources;
 import com.google.inject.Binder;
 import com.google.inject.Guice;
@@ -34,6 +29,12 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.google.inject.name.Named;
+
+import org.apache.commons.lang3.StringUtils;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigModule;
 import com.nesscomputing.httpclient.HttpClient;
@@ -55,7 +56,7 @@ public class TestSoloJetty8HttpServer
     private final HttpClient httpClient = null;
 
     @Inject
-    private Lifecycle lifecycle = null;
+    private final Lifecycle lifecycle = null;
 
     private String [] createServer(int ... port) throws Exception
     {
@@ -161,13 +162,9 @@ public class TestSoloJetty8HttpServer
     {
         int port;
 
-        ServerSocket socket = new ServerSocket();
-        try {
+        try (ServerSocket socket = new ServerSocket()) {
             socket.bind(new InetSocketAddress(0));
             port = socket.getLocalPort();
-        }
-        finally {
-            socket.close();
         }
 
         return port;
