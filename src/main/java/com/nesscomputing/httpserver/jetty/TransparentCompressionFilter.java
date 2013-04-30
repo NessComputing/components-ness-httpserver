@@ -97,8 +97,6 @@ public class TransparentCompressionFilter implements Filter
     protected int _minGzipSize=256;
     protected int _deflateCompressionLevel=Deflater.DEFAULT_COMPRESSION;
     protected boolean _deflateNoWrap = true;
-    protected Set<String> _excludedAgents;
-    protected Set<Pattern> _excludedAgentPatterns;
     protected Set<String> _excludedPaths;
     protected Set<Pattern> _excludedPathPatterns;
 
@@ -110,8 +108,6 @@ public class TransparentCompressionFilter implements Filter
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
-        super.init(filterConfig);
-
         String tmp=filterConfig.getInitParameter("bufferSize");
         if (tmp!=null)
             _bufferSize=Integer.parseInt(tmp);
@@ -135,23 +131,6 @@ public class TransparentCompressionFilter implements Filter
             StringTokenizer tok = new StringTokenizer(tmp,",",false);
             while (tok.hasMoreTokens())
                 _mimeTypes.add(tok.nextToken());
-        }
-        tmp=filterConfig.getInitParameter("excludedAgents");
-        if (tmp!=null)
-        {
-            _excludedAgents=new HashSet<String>();
-            StringTokenizer tok = new StringTokenizer(tmp,",",false);
-            while (tok.hasMoreTokens())
-               _excludedAgents.add(tok.nextToken());
-        }
-
-                tmp=filterConfig.getInitParameter("excludeAgentPatterns");
-        if (tmp!=null)
-        {
-            _excludedAgentPatterns=new HashSet<Pattern>();
-            StringTokenizer tok = new StringTokenizer(tmp,",",false);
-            while (tok.hasMoreTokens())
-                _excludedAgentPatterns.add(Pattern.compile(tok.nextToken()));
         }
 
         tmp=filterConfig.getInitParameter("excludePaths");
@@ -196,12 +175,6 @@ public class TransparentCompressionFilter implements Filter
         String compressionType = selectCompression(request.getHeader("accept-encoding"));
         if (compressionType!=null && !response.containsHeader("Content-Encoding") && !HttpMethods.HEAD.equalsIgnoreCase(request.getMethod()))
         {
-            String ua = getUserAgent(request);
-            if (isExcludedAgent(ua))
-            {
-                super.doFilter(request,response,chain);
-                return;
-            }
             String requestURI = request.getRequestURI();
             if (isExcludedPath(requestURI))
             {
@@ -334,39 +307,6 @@ public class TransparentCompressionFilter implements Filter
         public void onTimeout(Continuation continuation)
         {
         }
-    }
-
-    /**
-     * Checks to see if the userAgent is excluded
-     *
-     * @param ua
-     *            the user agent
-     * @return boolean true if excluded
-     */
-    private boolean isExcludedAgent(String ua)
-    {
-        if (ua == null)
-            return false;
-
-        if (_excludedAgents != null)
-        {
-            if (_excludedAgents.contains(ua))
-            {
-                return true;
-            }
-        }
-        if (_excludedAgentPatterns != null)
-        {
-            for (Pattern pattern : _excludedAgentPatterns)
-            {
-                if (pattern.matcher(ua).matches())
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     /**
