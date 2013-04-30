@@ -309,7 +309,7 @@ public class TransparentCompressionFilter implements Filter
         wrappedResponse.setMinCompressSize(_minGzipSize);
     }
 
-    private class ContinuationListenerWaitingForWrappedResponseToFinish implements ContinuationListener{
+    private static class ContinuationListenerWaitingForWrappedResponseToFinish implements ContinuationListener{
 
         private final CompressedResponseWrapper wrappedResponse;
 
