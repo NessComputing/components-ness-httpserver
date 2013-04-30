@@ -182,6 +182,4 @@ public class TestClasspathResourceHandler
         final String content = httpClient.get(baseUri + "/index.html", StringContentConverter.DEFAULT_RESPONSE_HANDLER).perform();
         Assert.assertTrue(content.endsWith("the welcome file\n"));
     }
-
-
 }
