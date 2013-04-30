@@ -1,6 +1,7 @@
 package com.nesscomputing.httpserver.jetty;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Singleton;
+
+import net.jpountz.lz4.LZ4BlockOutputStream;
 
 import org.eclipse.jetty.continuation.Continuation;
 import org.eclipse.jetty.continuation.ContinuationListener;
@@ -237,7 +240,25 @@ public class TransparentCompressionFilter implements Filter
     protected CompressedResponseWrapper createWrappedResponse(HttpServletRequest request, HttpServletResponse response, final String compressionType)
     {
         CompressedResponseWrapper wrappedResponse = null;
-        if (compressionType.equals(GZIP))
+        if (compressionType.equals(LZ4))
+        {
+            wrappedResponse = new CompressedResponseWrapper(request,response)
+            {
+                @Override
+                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response,long contentLength,int bufferSize, int minCompressSize) throws IOException
+                {
+                    return new AbstractCompressedStream(compressionType,request,response,contentLength,bufferSize,minCompressSize)
+                    {
+                        @Override
+                        protected DeflaterOutputStream createStream() throws IOException
+                        {
+                            return new DeflaterShim(new LZ4BlockOutputStream(_response.getOutputStream(),_bufferSize));
+                        }
+                    };
+                }
+            };
+        }
+        else if (compressionType.equals(GZIP))
         {
             wrappedResponse = new CompressedResponseWrapper(request,response)
             {
@@ -348,5 +369,56 @@ public class TransparentCompressionFilter implements Filter
             }
         }
         return false;
+    }
+
+    /**
+     * Obnoxiously, the {@link AbstractCompressedStream} requires a subclass of
+     * DeflaterOutputStream for no good reason.  So we wrap the LZ4 output stream
+     * to look like a Deflate stream, but then we completely ignore the
+     * superclass... :-(
+     */
+    private static class DeflaterShim extends DeflaterOutputStream
+    {
+
+        DeflaterShim(OutputStream out)
+        {
+            super(out);
+        }
+
+        @Override
+        public void write(int b) throws IOException
+        {
+            out.write(b);
+        }
+
+        @Override
+        public void write(byte[] b) throws IOException
+        {
+            out.write(b);
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException
+        {
+            out.write(b, off, len);
+        }
+
+        @Override
+        protected void deflate() throws IOException
+        {
+            throw new UnsupportedOperationException("We don't want to deflate...");
+        }
+
+        @Override
+        public void flush() throws IOException
+        {
+            out.flush();
+        }
+
+        @Override
+        public void close() throws IOException
+        {
+            out.close();
+        }
     }
 }
