@@ -178,7 +178,7 @@ public class TransparentCompressionFilter implements Filter
             String requestURI = request.getRequestURI();
             if (isExcludedPath(requestURI))
             {
-                super.doFilter(request,response,chain);
+                chain.doFilter(request,response);
                 return;
             }
 
@@ -187,7 +187,7 @@ public class TransparentCompressionFilter implements Filter
             boolean exceptional=true;
             try
             {
-                super.doFilter(request,wrappedResponse,chain);
+                chain.doFilter(request,wrappedResponse);
                 exceptional=false;
             }
             finally
@@ -208,7 +208,7 @@ public class TransparentCompressionFilter implements Filter
         }
         else
         {
-            super.doFilter(request,response,chain);
+            chain.doFilter(request,response);
         }
     }
 
