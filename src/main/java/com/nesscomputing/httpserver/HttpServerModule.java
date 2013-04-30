@@ -64,6 +64,7 @@ public class HttpServerModule extends ServletModule
 
         bind (GuiceFilter.class).in(Scopes.SINGLETON);
 
+        bind (TransparentCompressionFilter.class);
         filter("/*").through(TransparentCompressionFilter.class);
     }
 }

@@ -18,6 +18,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Singleton;
+
 import org.eclipse.jetty.continuation.Continuation;
 import org.eclipse.jetty.continuation.ContinuationListener;
 import org.eclipse.jetty.continuation.ContinuationSupport;
@@ -86,11 +88,14 @@ import com.nesscomputing.logging.Log;
  * excludePathPatterns        Same as excludePath, but accepts regex patterns for more complex matching.
  * </PRE>
  */
+@Singleton
 public class TransparentCompressionFilter implements Filter
 {
     private static final Log LOG = Log.findLog();
-    public final static String GZIP="gzip";
-    public final static String DEFLATE="deflate";
+
+    private final static String LZ4 = "lz4";
+    private final static String GZIP="gzip";
+    private final static String DEFLATE="deflate";
 
     protected Set<String> _mimeTypes;
     protected int _bufferSize=8192;
@@ -219,7 +224,9 @@ public class TransparentCompressionFilter implements Filter
         // prefer gzip over deflate
         if (encodingHeader!=null)
         {
-            if (encodingHeader.toLowerCase().contains(GZIP))
+            if (encodingHeader.toLowerCase().contains(LZ4))
+                return LZ4;
+            else if (encodingHeader.toLowerCase().contains(GZIP))
                 return GZIP;
             else if (encodingHeader.toLowerCase().contains(DEFLATE))
                 return DEFLATE;
