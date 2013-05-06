@@ -99,6 +99,12 @@
     </dependency>
 
     <dependency>
+      <groupId>net.jpountz.lz4</groupId>
+      <artifactId>lz4</artifactId>
+      <version>1.1-NESS-1.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.skife.config</groupId>
       <artifactId>config-magic</artifactId>
     </dependency>
@@ -136,6 +142,12 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
+      <version>${dep.jetty.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-continuation</artifactId>
       <version>${dep.jetty.version}</version>
     </dependency>
 

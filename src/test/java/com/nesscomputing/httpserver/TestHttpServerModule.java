@@ -21,12 +21,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -34,14 +28,18 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.google.inject.name.Named;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigModule;
 import com.nesscomputing.galaxy.GalaxyConfigModule;
 import com.nesscomputing.httpclient.HttpClient;
 import com.nesscomputing.httpclient.guice.HttpClientModule;
 import com.nesscomputing.httpclient.response.StringContentConverter;
-import com.nesscomputing.httpserver.HttpServerHandlerBinder;
-import com.nesscomputing.httpserver.HttpServerModule;
 import com.nesscomputing.httpserver.jetty.ClasspathResourceHandler;
 import com.nesscomputing.lifecycle.Lifecycle;
 import com.nesscomputing.lifecycle.LifecycleStage;
@@ -117,13 +115,9 @@ public class TestHttpServerModule
     {
         int port;
 
-        ServerSocket socket = new ServerSocket();
-        try {
+        try (ServerSocket socket = new ServerSocket()) {
             socket.bind(new InetSocketAddress(0));
             port = socket.getLocalPort();
-        }
-        finally {
-            socket.close();
         }
 
         return port;

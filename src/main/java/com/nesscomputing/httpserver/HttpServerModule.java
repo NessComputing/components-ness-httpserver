@@ -19,8 +19,10 @@ import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.ServletModule;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigProvider;
+import com.nesscomputing.httpserver.jetty.TransparentCompressionFilter;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
 import com.nesscomputing.httpserver.log.file.FileRequestLogModule;
 import com.nesscomputing.httpserver.log.log4j.Log4jRequestLogModule;
@@ -61,5 +63,8 @@ public class HttpServerModule extends ServletModule
         HttpServerHandlerBinder.bindCatchallServlet(binder()).to(InvalidRequestServlet.class).in(Scopes.SINGLETON);
 
         bind (GuiceFilter.class).in(Scopes.SINGLETON);
+
+        bind (TransparentCompressionFilter.class);
+        filter("/*").through(TransparentCompressionFilter.class);
     }
 }
