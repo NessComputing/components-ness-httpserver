@@ -19,7 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.server.Handler;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,6 +33,7 @@ import com.nesscomputing.httpclient.HttpClientResponse;
 import com.nesscomputing.httpclient.HttpClientResponseHandler;
 import com.nesscomputing.httpclient.response.ContentResponseHandler;
 import com.nesscomputing.httpclient.response.StringContentConverter;
+import com.nesscomputing.httpclient.response.Valid2xxContentConverter;
 import com.nesscomputing.httpserver.testing.LocalHttpService;
 import com.nesscomputing.testing.lessio.AllowNetworkAccess;
 import com.nesscomputing.testing.lessio.AllowNetworkListen;
@@ -143,7 +147,8 @@ public class TestClasspathResourceHandler
             }
         });
 
-        final String content = httpClient.get(baseUri + "/simple-content.txt", responseHandler).perform();
+        final String uri = baseUri + "/simple-content.txt";
+        final String content = httpClient.get(uri, responseHandler).perform();
 
         Assert.assertNotNull(holder.get());
         Assert.assertEquals("this is simple content for a simple test\n", content);
@@ -157,9 +162,14 @@ public class TestClasspathResourceHandler
             }
         });
 
-        final String content2 = httpClient.get(baseUri + "/simple-content.txt", responseHandler2).addHeader("If-Modified-Since", holder.get()).perform();
+        final String content2 = httpClient.get(uri, responseHandler2).addHeader("If-Modified-Since", holder.get()).perform();
 
         Assert.assertNull(content2);
+
+        // "Time zone names ('z') cannot be parsed."  so we hack it by hand, assuming GMT  >:(
+        final DateTimeFormatter httpFormat = DateTimeFormat.forPattern("EEE, dd MMM YYYY HH:mm:ss");
+        final long newModified = httpFormat.parseMillis(StringUtils.removeEnd(holder.get(), " GMT")) - 600000;
+        httpClient.get(uri, Valid2xxContentConverter.DEFAULT_FAILING_RESPONSE_HANDLER).addHeader("If-Modified-Since", httpFormat.print(newModified) + " GMT").perform();
     }
 
     @Test

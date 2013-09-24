@@ -115,7 +115,7 @@ public class ClasspathResourceHandler extends AbstractHandler
 
         // Does the request contain an IF_MODIFIED_SINCE header?
         final long ifModifiedSince = request.getDateHeader(HttpHeaders.IF_MODIFIED_SINCE);
-        if (ifModifiedSince > 0 && startupTime/1000 <= ifModifiedSince/1000) {
+        if (ifModifiedSince > 0 && startupTime <= ifModifiedSince/1000) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
             return;
         }
