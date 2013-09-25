@@ -23,6 +23,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.io.ByteStreams;
+import com.google.inject.Inject;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpHeaders;
@@ -34,8 +37,7 @@ import org.eclipse.jetty.server.AbstractHttpConnection;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-import com.google.common.io.ByteStreams;
-import com.google.inject.Inject;
+import com.nesscomputing.httpserver.HttpServerConfig;
 
 /**
  * Serves files from a given folder on the classpath through jetty.
@@ -52,6 +54,7 @@ public class ClasspathResourceHandler extends AbstractHandler
     private final long startupTime = System.currentTimeMillis()/1000L;
 
     private static final MimeTypes MIME_TYPES;
+    private boolean is304Disabled;
 
     static {
         final MimeTypes mimeTypes = new MimeTypes();
@@ -65,6 +68,12 @@ public class ClasspathResourceHandler extends AbstractHandler
     {
         this.basePath = basePath;
         this.resourceLocation = resourceLocation;
+    }
+
+    @Inject
+    void setHttpServerConfig(HttpServerConfig config)
+    {
+        this.is304Disabled = config.isIfModifiedSinceDisabled();
     }
 
     @Override
@@ -115,7 +124,7 @@ public class ClasspathResourceHandler extends AbstractHandler
 
         // Does the request contain an IF_MODIFIED_SINCE header?
         final long ifModifiedSince = request.getDateHeader(HttpHeaders.IF_MODIFIED_SINCE);
-        if (ifModifiedSince > 0 && startupTime <= ifModifiedSince/1000) {
+        if (ifModifiedSince > 0 && startupTime <= ifModifiedSince/1000 && !is304Disabled) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
             return;
         }

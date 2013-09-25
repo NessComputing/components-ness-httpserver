@@ -121,4 +121,11 @@ public abstract class HttpServerConfig
     {
         return null;
     }
+
+    @Config("ness.httpserver.resource.disable-304")
+    @Default("false")
+    public boolean isIfModifiedSinceDisabled()
+    {
+        return false;
+    }
 }
