@@ -18,6 +18,7 @@ package com.nesscomputing.httpserver.jetty;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -34,8 +35,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Singleton;
-
 import net.jpountz.lz4.LZ4BlockOutputStream;
 
 import org.eclipse.jetty.continuation.Continuation;
@@ -45,6 +44,7 @@ import org.eclipse.jetty.http.HttpMethods;
 import org.eclipse.jetty.http.gzip.AbstractCompressedStream;
 import org.eclipse.jetty.http.gzip.CompressedResponseWrapper;
 
+import com.google.inject.Singleton;
 import com.nesscomputing.logging.Log;
 
 /**
@@ -92,6 +92,8 @@ import com.nesscomputing.logging.Log;
  *
  * mimeTypes                  Comma separated list of mime types to compress. See description above.
  *
+ * vary                       Content of the Vary header. Default is Accept-Encoding, User-Agent.
+ *
  * excludedAgents             Comma separated list of user agents to exclude from compression. Does a
  *                            {@link String#contains(CharSequence)} to check if the excluded agent occurs
  *                            in the user-agent header. If it does -> no compression
@@ -119,6 +121,7 @@ public class TransparentCompressionFilter implements Filter
     protected int _bufferSize=8192;
     protected int _minGzipSize=256;
     protected int _deflateCompressionLevel=Deflater.DEFAULT_COMPRESSION;
+    protected String _vary = "Accept-Encoding, User-Agent";
     protected boolean _deflateNoWrap = true;
     protected Set<String> _excludedPaths;
     protected Set<Pattern> _excludedPathPatterns;
@@ -133,19 +136,27 @@ public class TransparentCompressionFilter implements Filter
     {
         String tmp=filterConfig.getInitParameter("bufferSize");
         if (tmp!=null)
+        {
             _bufferSize=Integer.parseInt(tmp);
+        }
 
         tmp=filterConfig.getInitParameter("minGzipSize");
         if (tmp!=null)
+        {
             _minGzipSize=Integer.parseInt(tmp);
+        }
 
         tmp=filterConfig.getInitParameter("deflateCompressionLevel");
         if (tmp!=null)
+        {
             _deflateCompressionLevel=Integer.parseInt(tmp);
+        }
 
         tmp=filterConfig.getInitParameter("deflateNoWrap");
         if (tmp!=null)
+        {
             _deflateNoWrap=Boolean.parseBoolean(tmp);
+        }
 
         tmp=filterConfig.getInitParameter("mimeTypes");
         if (tmp!=null)
@@ -153,7 +164,9 @@ public class TransparentCompressionFilter implements Filter
             _mimeTypes=new HashSet<String>();
             StringTokenizer tok = new StringTokenizer(tmp,",",false);
             while (tok.hasMoreTokens())
+            {
                 _mimeTypes.add(tok.nextToken());
+            }
         }
 
         tmp=filterConfig.getInitParameter("excludePaths");
@@ -162,7 +175,9 @@ public class TransparentCompressionFilter implements Filter
             _excludedPaths=new HashSet<String>();
             StringTokenizer tok = new StringTokenizer(tmp,",",false);
             while (tok.hasMoreTokens())
+            {
                 _excludedPaths.add(tok.nextToken());
+            }
         }
 
         tmp=filterConfig.getInitParameter("excludePathPatterns");
@@ -171,7 +186,15 @@ public class TransparentCompressionFilter implements Filter
             _excludedPathPatterns=new HashSet<Pattern>();
             StringTokenizer tok = new StringTokenizer(tmp,",",false);
             while (tok.hasMoreTokens())
+            {
                 _excludedPathPatterns.add(Pattern.compile(tok.nextToken()));
+            }
+        }
+
+        tmp=filterConfig.getInitParameter("vary");
+        if (tmp!=null)
+        {
+            _vary = tmp;
         }
     }
 
@@ -226,7 +249,9 @@ public class TransparentCompressionFilter implements Filter
                     wrappedResponse.noCompression();
                 }
                 else
+                {
                     wrappedResponse.finish();
+                }
             }
         }
         else
@@ -242,12 +267,18 @@ public class TransparentCompressionFilter implements Filter
         // prefer gzip over deflate
         if (encodingHeader!=null)
         {
-            if (encodingHeader.toLowerCase().contains(LZ4))
+            if (encodingHeader.toLowerCase(Locale.ENGLISH).contains(LZ4))
+            {
                 return LZ4;
-            else if (encodingHeader.toLowerCase().contains(GZIP))
+            }
+            else if (encodingHeader.toLowerCase(Locale.ENGLISH).contains(GZIP))
+            {
                 return GZIP;
-            else if (encodingHeader.toLowerCase().contains(DEFLATE))
+            }
+            else if (encodingHeader.toLowerCase(Locale.ENGLISH).contains(DEFLATE))
+            {
                 return DEFLATE;
+            }
         }
         return null;
     }
@@ -260,9 +291,9 @@ public class TransparentCompressionFilter implements Filter
             wrappedResponse = new CompressedResponseWrapper(request,response)
             {
                 @Override
-                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response,long contentLength,int bufferSize, int minCompressSize) throws IOException
+                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response) throws IOException
                 {
-                    return new AbstractCompressedStream(compressionType,request,response,contentLength,bufferSize,minCompressSize)
+                    return new AbstractCompressedStream(compressionType,request,this, _vary)
                     {
                         @Override
                         protected DeflaterOutputStream createStream() throws IOException
@@ -278,9 +309,9 @@ public class TransparentCompressionFilter implements Filter
             wrappedResponse = new CompressedResponseWrapper(request,response)
             {
                 @Override
-                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response,long contentLength,int bufferSize, int minCompressSize) throws IOException
+                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response) throws IOException
                 {
-                    return new AbstractCompressedStream(compressionType,request,response,contentLength,bufferSize,minCompressSize)
+                    return new AbstractCompressedStream(compressionType,request,this, _vary)
                     {
                         @Override
                         protected DeflaterOutputStream createStream() throws IOException
@@ -296,9 +327,9 @@ public class TransparentCompressionFilter implements Filter
             wrappedResponse = new CompressedResponseWrapper(request,response)
             {
                 @Override
-                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response,long contentLength,int bufferSize, int minCompressSize) throws IOException
+                protected AbstractCompressedStream newCompressedStream(HttpServletRequest request,HttpServletResponse response) throws IOException
                 {
-                    return new AbstractCompressedStream(compressionType,request,response,contentLength,bufferSize,minCompressSize)
+                    return new AbstractCompressedStream(compressionType,request,this, _vary)
                     {
                         @Override
                         protected DeflaterOutputStream createStream() throws IOException
@@ -362,7 +393,9 @@ public class TransparentCompressionFilter implements Filter
     private boolean isExcludedPath(String requestURI)
     {
         if (requestURI == null)
+        {
             return false;
+        }
         if (_excludedPaths != null)
         {
             for (String excludedPath : _excludedPaths)
