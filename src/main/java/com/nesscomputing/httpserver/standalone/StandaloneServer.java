@@ -57,7 +57,7 @@ public abstract class StandaloneServer
     private static final Log LOG = Log.findLog();
 
     @Inject
-    private final GuiceFilter guiceFilter = null;
+    private GuiceFilter guiceFilter = null;
 
     private final Thread shutdownThread = new Thread("Server Shutdown Thread")
     {
@@ -76,8 +76,12 @@ public abstract class StandaloneServer
 
     public StandaloneServer()
     {
-        // Hook up logging.
-        ConfigureStandaloneLogging.configure(getLoggingConfigurationName());
+        // this is actually ok, because the method only returns a string constant.
+        @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
+        final String logName = getLoggingConfigurationName();
+
+        // Hook up logging
+        ConfigureStandaloneLogging.configure(logName);
 
         // Suck java.util.logging into log4j
         AssimilateForeignLogging.assimilate();
