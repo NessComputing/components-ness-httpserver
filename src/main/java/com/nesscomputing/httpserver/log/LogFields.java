@@ -41,11 +41,11 @@ public final class LogFields
     {
         for (String fieldSpecifier : fields) {
             String[] chunks = StringUtils.split(fieldSpecifier, ":");
-            String fieldKey = chunks[0];
             if (chunks.length > 2) {
                 throw new IllegalArgumentException(String.format("Bad specifier \"%s\" has too many colons", fieldSpecifier));
             }
 
+            String fieldKey = chunks[0];
             if (!knownFields.containsKey(fieldKey)) {
                 throw new IllegalArgumentException(String.format("Invalid log pattern: unknown field <%s>", fieldSpecifier));
             }

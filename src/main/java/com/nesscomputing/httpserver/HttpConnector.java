@@ -107,8 +107,9 @@ public class HttpConnector
     @Override
     public boolean equals(final Object other)
     {
-        if (!(other instanceof HttpConnector))
+        if (!(other instanceof HttpConnector)) {
             return false;
+        }
         HttpConnector castOther = (HttpConnector) other;
         return new EqualsBuilder().append(secure, castOther.secure).append(port, castOther.port).append(address, castOther.address).append(scheme, castOther.scheme).isEquals();
     }

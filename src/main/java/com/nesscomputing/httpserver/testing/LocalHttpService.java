@@ -70,13 +70,13 @@ public class LocalHttpService
         return new LocalHttpService(getSecuredHandler(handler, login, password), getSSLHttpConnector());
     }
 
-	public static LocalHttpService forSSLClientSSLServerHandler(final Handler handler,
-		String truststore, String truststorePassword, String keystore, String keystorePassword,
-		String keystoreType) {
-		return new LocalHttpService(handler,
-			getSSLClientCertHttpConnector(truststore, truststorePassword, keystore,
-				keystorePassword, keystoreType));
-	}
+    public static LocalHttpService forSSLClientSSLServerHandler(final Handler handler,
+        String truststore, String truststorePassword, String keystore, String keystorePassword,
+        String keystoreType) {
+        return new LocalHttpService(handler,
+            getSSLClientCertHttpConnector(truststore, truststorePassword, keystore,
+                keystorePassword, keystoreType));
+    }
 
     private static Connector getHttpConnector()
     {
@@ -102,9 +102,9 @@ public class LocalHttpService
         return scc;
     }
 
-	private static Connector getSSLClientCertHttpConnector(String truststore,
-		String truststorePassword, String keystore, String keystorePassword, String keystoreType)
-	{
+    private static Connector getSSLClientCertHttpConnector(String truststore,
+        String truststorePassword, String keystore, String keystorePassword, String keystoreType)
+    {
         final URL keystoreUrl = Resources.getResource(LocalHttpService.class, keystore);
 
         final SslContextFactory contextFactory = new SslContextFactory();
@@ -121,11 +121,11 @@ public class LocalHttpService
         contextFactory.setNeedClientAuth(true);
 
         final SslSelectChannelConnector scc = new SslSelectChannelConnector(contextFactory);
-		scc.setPort(0);
-		scc.setHost("localhost");
+        scc.setPort(0);
+        scc.setHost("localhost");
 
-		return scc;
-	}
+        return scc;
+    }
 
     private static Handler getSecuredHandler(final Handler handler, final String login, final String password)
     {
@@ -160,7 +160,7 @@ public class LocalHttpService
         try {
             server.start();
         } catch (Exception e) {
-            throw new IllegalStateException("LocalHttpService did not start properly!");
+            throw new IllegalStateException("LocalHttpService did not start properly!", e);
         }
     }
 
@@ -169,7 +169,7 @@ public class LocalHttpService
         try {
             server.stop();
         } catch (Exception e) {
-            throw new IllegalStateException("LocalHttpService did not stop properly!");
+            throw new IllegalStateException("LocalHttpService did not stop properly!", e);
         }
 
         try {
