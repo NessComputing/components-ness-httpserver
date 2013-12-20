@@ -31,9 +31,9 @@ import com.nesscomputing.logging.Log;
 @Singleton
 class InvalidRequestServlet extends HttpServlet
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final Log LOG = Log.findLog();
+    private static final Log LOG = Log.findLog();
 
     @Override
     public void service(final HttpServletRequest req, final HttpServletResponse res) throws IOException

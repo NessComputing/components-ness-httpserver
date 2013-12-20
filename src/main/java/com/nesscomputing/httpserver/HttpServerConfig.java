@@ -75,7 +75,7 @@ public abstract class HttpServerConfig
     @DefaultNull
     public TimeSpan getShutdownTimeout()
     {
-    	return new TimeSpan(1, TimeUnit.SECONDS);
+        return new TimeSpan(1, TimeUnit.SECONDS);
     }
 
     @Config("ness.httpserver.ssl-keystore")

@@ -113,9 +113,9 @@ public class TransparentCompressionFilter implements Filter
 {
     private static final Log LOG = Log.findLog();
 
-    private final static String LZ4 = "lz4";
-    private final static String GZIP="gzip";
-    private final static String DEFLATE="deflate";
+    private static final String LZ4 = "lz4";
+    private static final String GZIP="gzip";
+    private static final String DEFLATE="deflate";
 
     protected Set<String> _mimeTypes;
     protected int _bufferSize=8192;
