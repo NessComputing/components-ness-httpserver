@@ -17,8 +17,8 @@ package com.nesscomputing.httpserver.standalone;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
+
 import com.nesscomputing.config.Config;
-import com.nesscomputing.httpserver.standalone.StandaloneServer;
 
 @SuppressWarnings("deprecation")
 class DemoServer extends StandaloneServer

@@ -26,6 +26,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Charsets;
+import com.google.common.io.Closeables;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import com.nesscomputing.httpserver.log.LogFields;
+import com.nesscomputing.httpserver.log.LogFields.LogField;
+import com.nesscomputing.logging.Log;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,16 +42,6 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Charsets;
-import com.google.common.io.Closeables;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.nesscomputing.httpserver.HttpServerConfig;
-import com.nesscomputing.httpserver.log.LogFields;
-import com.nesscomputing.httpserver.log.LogFields.LogField;
-import com.nesscomputing.logging.Log;
 
 /**
  * A simple non-rolling access log writer, which writes out to a tab separated file.

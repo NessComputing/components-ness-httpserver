@@ -29,11 +29,6 @@ import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.google.inject.name.Named;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigModule;
 import com.nesscomputing.galaxy.GalaxyConfigModule;
@@ -44,8 +39,13 @@ import com.nesscomputing.httpserver.jetty.ClasspathResourceHandler;
 import com.nesscomputing.lifecycle.Lifecycle;
 import com.nesscomputing.lifecycle.LifecycleStage;
 import com.nesscomputing.lifecycle.guice.LifecycleModule;
-import com.nesscomputing.testing.lessio.AllowNetworkAccess;
-import com.nesscomputing.testing.lessio.AllowNetworkListen;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.kitei.testing.lessio.AllowNetworkAccess;
+import org.kitei.testing.lessio.AllowNetworkListen;
 
 /**
  * manual test for the resource handler. Manual, because it uses port 8080 on localhost which could be taken.

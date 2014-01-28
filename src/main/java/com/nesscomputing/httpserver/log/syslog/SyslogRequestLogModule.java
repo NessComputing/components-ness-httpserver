@@ -16,14 +16,15 @@
 package com.nesscomputing.httpserver.log.syslog;
 
 
-import org.eclipse.jetty.server.handler.RequestLogHandler;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.httpserver.HttpServerHandlerBinder;
+
+import org.eclipse.jetty.server.handler.RequestLogHandler;
 
 public class SyslogRequestLogModule extends AbstractModule
 {

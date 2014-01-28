@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
 
+import com.nesscomputing.httpserver.HttpServerConfig;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpHeaders;
@@ -36,8 +38,6 @@ import org.eclipse.jetty.io.WriterOutputStream;
 import org.eclipse.jetty.server.AbstractHttpConnection;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-
-import com.nesscomputing.httpserver.HttpServerConfig;
 
 /**
  * Serves files from a given folder on the classpath through jetty.

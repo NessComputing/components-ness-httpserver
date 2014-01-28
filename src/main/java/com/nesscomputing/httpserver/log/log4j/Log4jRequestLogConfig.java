@@ -17,10 +17,10 @@ package com.nesscomputing.httpserver.log.log4j;
 
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
+
 import org.skife.config.Config;
 import org.skife.config.Default;
-
-import com.google.common.collect.ImmutableSet;
 
 public abstract class Log4jRequestLogConfig
 {

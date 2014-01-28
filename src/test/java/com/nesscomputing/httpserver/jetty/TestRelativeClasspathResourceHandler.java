@@ -19,22 +19,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.nesscomputing.httpclient.HttpClient;
+import com.nesscomputing.httpclient.HttpClientResponse;
+import com.nesscomputing.httpclient.HttpClientResponseHandler;
+import com.nesscomputing.httpclient.response.ContentResponseHandler;
+import com.nesscomputing.httpclient.response.StringContentConverter;
+import com.nesscomputing.httpserver.testing.LocalHttpService;
 
 import org.eclipse.jetty.server.Handler;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.nesscomputing.httpclient.HttpClient;
-import com.nesscomputing.httpclient.HttpClientResponse;
-import com.nesscomputing.httpclient.HttpClientResponseHandler;
-import com.nesscomputing.httpclient.response.ContentResponseHandler;
-import com.nesscomputing.httpclient.response.StringContentConverter;
-import com.nesscomputing.httpserver.jetty.ClasspathResourceHandler;
-import com.nesscomputing.httpserver.testing.LocalHttpService;
-import com.nesscomputing.testing.lessio.AllowNetworkAccess;
-import com.nesscomputing.testing.lessio.AllowNetworkListen;
+import org.kitei.testing.lessio.AllowNetworkAccess;
+import org.kitei.testing.lessio.AllowNetworkListen;
 
 
 @AllowNetworkListen(ports= {0})

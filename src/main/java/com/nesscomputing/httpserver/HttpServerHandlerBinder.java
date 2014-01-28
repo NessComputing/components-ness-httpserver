@@ -19,14 +19,13 @@ import java.lang.annotation.Annotation;
 
 import javax.servlet.Servlet;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.handler.HandlerWrapper;
-
 import com.google.inject.Binder;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
-import com.google.inject.servlet.GuiceFilter;
+
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.HandlerWrapper;
 
 
 /**

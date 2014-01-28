@@ -16,6 +16,7 @@
 package com.nesscomputing.httpserver.standalone;
 
 import com.google.inject.Module;
+
 import com.nesscomputing.lifecycle.LifecycleStage;
 import com.nesscomputing.lifecycle.ServiceDiscoveryLifecycle;
 import com.nesscomputing.lifecycle.guice.LifecycleModule;

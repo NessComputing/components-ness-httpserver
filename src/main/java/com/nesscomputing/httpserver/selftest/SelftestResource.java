@@ -47,23 +47,23 @@ public class SelftestResource {
         this.defaultTest = defaultTest;
     }
 
-	/**
-	 * On success, returns a 2xx response.
-	 * To report a warning-level issue, returns a 3xx response.
-	 * To report an error-level issue, returns a 5xx response
-	 * or throws an Exception.
-	 */
-	@GET
-	public Response doSelftest() throws Exception {
-		for (Selftest test : tests) {
-		    test.doSelftest();
-		}
+    /**
+     * On success, returns a 2xx response.
+     * To report a warning-level issue, returns a 3xx response.
+     * To report an error-level issue, returns a 5xx response
+     * or throws an Exception.
+     */
+    @GET
+    public Response doSelftest() throws Exception {
+        for (Selftest test : tests) {
+            test.doSelftest();
+        }
 
-		if (defaultTest != null) {
-		    return defaultTest.doSelftest();
-		}
-		else {
-		    return Response.ok().build();
-		}
-	}
+        if (defaultTest != null) {
+            return defaultTest.doSelftest();
+        }
+        else {
+            return Response.ok().build();
+        }
+    }
 }

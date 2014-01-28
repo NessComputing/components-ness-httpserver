@@ -22,12 +22,12 @@ import java.util.Map;
 
 import javax.servlet.Servlet;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * A standalone, non-galaxy http Server.

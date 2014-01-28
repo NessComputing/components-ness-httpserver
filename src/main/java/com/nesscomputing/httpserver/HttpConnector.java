@@ -19,11 +19,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.eclipse.jetty.server.Connector;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Describes a connector used by a server.

@@ -21,14 +21,6 @@ import static org.junit.Assert.fail;
 import java.util.List;
 import java.util.UUID;
 
-import org.easymock.EasyMockSupport;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Response;
-import org.joda.time.DateTimeUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
@@ -39,12 +31,11 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.config.ConfigModule;
 import com.nesscomputing.galaxy.GalaxyConfig;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
-import com.nesscomputing.httpserver.log.syslog.SyslogRequestLog;
-import com.nesscomputing.httpserver.log.syslog.SyslogRequestLogModule;
 import com.nesscomputing.syslog4j.Syslog;
 import com.nesscomputing.syslog4j.SyslogIF;
 import com.nesscomputing.syslog4j.SyslogLevel;
@@ -52,7 +43,15 @@ import com.nesscomputing.syslog4j.SyslogRuntimeException;
 import com.nesscomputing.syslog4j.impl.AbstractSyslogWriter;
 import com.nesscomputing.syslog4j.impl.net.AbstractNetSyslog;
 import com.nesscomputing.syslog4j.impl.net.AbstractNetSyslogConfig;
-import com.nesscomputing.testing.lessio.AllowNetworkListen;
+
+import org.easymock.EasyMockSupport;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Response;
+import org.joda.time.DateTimeUtils;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+import org.kitei.testing.lessio.AllowNetworkListen;
 
 @AllowNetworkListen(ports={0})
 public class SyslogRequestLogTest extends EasyMockSupport
