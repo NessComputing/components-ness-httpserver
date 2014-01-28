@@ -20,6 +20,8 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
+import com.nesscomputing.serverinfo.ServerInfo;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.MDC;
 import org.eclipse.jetty.server.Request;
@@ -27,8 +29,6 @@ import org.eclipse.jetty.server.Response;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
-
-import com.nesscomputing.serverinfo.ServerInfo;
 
 public final class LogFields
 {

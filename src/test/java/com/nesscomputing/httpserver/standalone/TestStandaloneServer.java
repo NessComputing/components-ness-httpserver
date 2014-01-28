@@ -15,14 +15,12 @@
  */
 package com.nesscomputing.httpserver.standalone;
 
+import com.nesscomputing.config.Config;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.nesscomputing.config.Config;
-import com.nesscomputing.httpserver.standalone.AnnouncingStandaloneServer;
-import com.nesscomputing.httpserver.standalone.StandaloneServer;
-import com.nesscomputing.testing.lessio.AllowNetworkAccess;
-import com.nesscomputing.testing.lessio.AllowNetworkListen;
+import org.kitei.testing.lessio.AllowNetworkAccess;
+import org.kitei.testing.lessio.AllowNetworkListen;
 
 
 @AllowNetworkListen(ports= {0})

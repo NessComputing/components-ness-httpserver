@@ -18,14 +18,15 @@ package com.nesscomputing.httpserver.log.syslog;
 import java.util.List;
 import java.util.Set;
 
-import org.skife.config.Config;
-import org.skife.config.Default;
-import org.skife.config.DefaultNull;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+
 import com.nesscomputing.syslog4j.SyslogFacility;
+
+import org.skife.config.Config;
+import org.skife.config.Default;
+import org.skife.config.DefaultNull;
 
 public abstract class SyslogRequestLogConfig
 {

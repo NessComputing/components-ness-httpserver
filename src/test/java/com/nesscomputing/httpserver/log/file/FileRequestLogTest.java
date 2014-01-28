@@ -24,15 +24,6 @@ import java.io.StringWriter;
 
 import javax.servlet.http.Cookie;
 
-
-import org.easymock.EasyMockSupport;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Response;
-import org.joda.time.DateTimeUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.google.inject.Binder;
 import com.google.inject.CreationException;
 import com.google.inject.Guice;
@@ -41,10 +32,17 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+
 import com.nesscomputing.config.Config;
 import com.nesscomputing.httpserver.log.LogFieldsModule;
-import com.nesscomputing.httpserver.log.file.FileRequestLog;
-import com.nesscomputing.httpserver.log.file.FileRequestLogModule;
+
+import org.easymock.EasyMockSupport;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Response;
+import org.joda.time.DateTimeUtils;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class FileRequestLogTest extends EasyMockSupport
 {

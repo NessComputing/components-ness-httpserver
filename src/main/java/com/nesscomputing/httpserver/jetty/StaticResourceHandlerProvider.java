@@ -19,14 +19,15 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
 import com.nesscomputing.httpserver.HttpServerConfig;
+
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 /**
  * Serves static resources from a path in the filesystem. The location should be in the galaxy tarball and set by configuration.

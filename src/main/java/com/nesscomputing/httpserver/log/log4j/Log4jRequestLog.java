@@ -19,6 +19,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import com.nesscomputing.httpserver.log.LogFields.LogField;
+import com.nesscomputing.logging.Log;
 
 import org.antlr.stringtemplate.StringTemplate;
 import org.apache.commons.lang3.ObjectUtils;
@@ -28,11 +33,6 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.nesscomputing.httpserver.log.LogFields.LogField;
-import com.nesscomputing.logging.Log;
 
 /**
  * Log any request straight into log4j, which then can be used to redirect it e.g.

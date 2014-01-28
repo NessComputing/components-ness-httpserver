@@ -19,6 +19,16 @@ import static org.easymock.EasyMock.expect;
 
 import javax.servlet.http.Cookie;
 
+import com.google.inject.Binder;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.Stage;
+
+import com.nesscomputing.config.Config;
+import com.nesscomputing.httpserver.log.LogFieldsModule;
 
 import org.easymock.EasyMockSupport;
 import org.eclipse.jetty.server.Request;
@@ -27,18 +37,6 @@ import org.joda.time.DateTimeUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Module;
-import com.google.inject.Stage;
-import com.nesscomputing.config.Config;
-import com.nesscomputing.httpserver.log.LogFieldsModule;
-import com.nesscomputing.httpserver.log.log4j.Log4jRequestLog;
-import com.nesscomputing.httpserver.log.log4j.Log4jRequestLogModule;
 
 public class Log4jRequestLogTest extends EasyMockSupport
 {

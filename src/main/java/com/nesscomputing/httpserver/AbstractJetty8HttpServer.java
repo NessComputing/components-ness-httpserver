@@ -29,6 +29,18 @@ import javax.management.MBeanServer;
 import javax.servlet.DispatcherType;
 import javax.servlet.Servlet;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Sets;
+import com.google.common.primitives.Ints;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import com.google.inject.servlet.GuiceFilter;
+
+import com.nesscomputing.lifecycle.LifecycleStage;
+import com.nesscomputing.lifecycle.guice.OnStage;
+import com.nesscomputing.logging.Log;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Handler;
@@ -43,16 +55,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
-import com.google.common.collect.Sets;
-import com.google.common.primitives.Ints;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import com.google.inject.servlet.GuiceFilter;
-import com.nesscomputing.lifecycle.LifecycleStage;
-import com.nesscomputing.lifecycle.guice.OnStage;
-import com.nesscomputing.logging.Log;
 
 public abstract class AbstractJetty8HttpServer implements HttpServer
 {

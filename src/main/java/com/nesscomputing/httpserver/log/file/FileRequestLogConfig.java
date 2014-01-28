@@ -18,12 +18,12 @@ package com.nesscomputing.httpserver.log.file;
 import java.util.List;
 import java.util.Set;
 
-import org.skife.config.Config;
-import org.skife.config.Default;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+
+import org.skife.config.Config;
+import org.skife.config.Default;
 
 public abstract class FileRequestLogConfig
 {

@@ -35,6 +35,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Singleton;
+
+import com.nesscomputing.logging.Log;
+
 import net.jpountz.lz4.LZ4BlockOutputStream;
 
 import org.eclipse.jetty.continuation.Continuation;
@@ -43,9 +47,6 @@ import org.eclipse.jetty.continuation.ContinuationSupport;
 import org.eclipse.jetty.http.HttpMethods;
 import org.eclipse.jetty.http.gzip.AbstractCompressedStream;
 import org.eclipse.jetty.http.gzip.CompressedResponseWrapper;
-
-import com.google.inject.Singleton;
-import com.nesscomputing.logging.Log;
 
 /**
  * <b>NOTE: this is a copy of the Jetty GzipFilter, updated to add LZ4 support!</b>

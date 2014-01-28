@@ -23,18 +23,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.RequestLog;
-import org.eclipse.jetty.server.Response;
-import org.eclipse.jetty.util.component.AbstractLifeCycle;
-
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
 import com.nesscomputing.galaxy.GalaxyConfig;
 import com.nesscomputing.httpserver.log.LogFields;
 import com.nesscomputing.httpserver.log.LogFields.LogField;
@@ -44,6 +39,12 @@ import com.nesscomputing.syslog4j.SyslogConfigIF;
 import com.nesscomputing.syslog4j.SyslogIF;
 import com.nesscomputing.syslog4j.impl.message.processor.structured.StructuredSyslogMessageProcessor;
 import com.nesscomputing.syslog4j.impl.message.structured.StructuredSyslogMessage;
+
+import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.RequestLog;
+import org.eclipse.jetty.server.Response;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
 
 /**
  * Send jetty request log straight into syslog to allow aggregation with logstash.
